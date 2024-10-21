@@ -1,0 +1,106 @@
+:root {
+  --azulbbva: #3E54AC;
+  --blanco: #F7EFE5;
+  --moradosoft: #C3ACD0;
+  --grisnegroso: #333;
+  --Griss: #a3a7be;
+
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: var(--blanco);
+  color: var(--grisnegroso);
+}
+
+h1 {
+  text-align: center;
+  color: var(--moradosoft);
+  font-size: 3.5rem;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--Griss);
+  padding: 10px 20px;
+}
+
+#menu-toggle {
+  background-color: var(--Griss);
+  border: none;
+  color: var(--blanco);
+  font-size: 2rem;
+  cursor: pointer;
+  margin-right:  auto;
+}
+
+.centro {
+  background-color: var(--Griss);
+  color: var(--blanco);
+  flex: 1;
+  text-align: center;
+}
+
+.derecha {
+  background-color: var(--Griss);
+  margin-left: 20px; /* Espacio entre el logo y el contacto */
+}
+
+nav {
+  background-color: var(--Griss);
+  color: white;
+  transition: max-height 0.3s ease-out;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  padding: 10px 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+nav a:hover {
+  background-color: var(--moradosoft);
+  color: var(--azulbbva);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  #menu-toggle {
+      font-size: 1.5rem;
+      padding: 5px;
+  }
+
+  nav ul {
+      padding: 10px;
+  }
+
+  nav li {
+      padding: 15px;
+  }
+}
