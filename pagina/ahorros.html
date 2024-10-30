@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina principal</title>
-    <link rel="stylesheet" href="CSS/styles.css">
+    <title>Ahorros</title>
+    <link rel="stylesheet" href="CSS/stylesahorros.css">
     <link rel="stylesheet" href="CSS/normalize.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
-    <!-- Cabecera -->
-     <header class="header">
-        <!-- Menu hamburguesa -->
-        <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
-            &#9776; 
-        </button>
-        <div class="centro">
-            <a href="./index.html" class="sin-subrayado">
-                <h1>SelfBank</h1>
-            </a>
-        </div>
-        
-     </header>
+   <!-- Cabecera -->
+   <header class="header">
+    <!-- Menu hamburguesa -->
+    <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
+        &#9776; 
+    </button>
+    <div class="centro">
+        <a href="./index.html" class="sin-subrayado">
+            <h1>SelfBank</h1>
+        </a>
+    </div>
     
+ </header>
+
 
     <nav id="menu" class="hidden">
         <ul>
@@ -51,42 +51,12 @@
                 payments
                 </span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pagar</a></li>
         </ul>
-    </nav>
+    </nav> 
 
     <main>
-        <div class="ventanas">
-            <div class="ventana" id="debitos">
-                <h2>Tarjetas de debito</h2>
-                <ul id="lista-debitos"></ul>
-            </div>
-    
-            <div class="ventana" id="creditos">
-                <h2>Tarjetas de credito</h2>
-                <ul id="lista-creditos"></ul>
-            </div>
-        </div>    
+        <h2>Ahorros</h2>
+            
     </main>
-
-    <div class="botones-container">
-        <div class="botones">
-            <button class="boton">
-                <span class="material-symbols-outlined">add_card</span>
-                <br>
-                Agregar Tarjetas
-            </button>
-            <button class="boton">
-                <span class="material-symbols-outlined">question_answer</span>
-               <br>
-                Preguntas Frecuentes
-            </button>
-            <button class="boton">
-                <span class="material-symbols-outlined">logout</span>
-                <br>
-                Cerrar sesión
-            </button>
-        </div>
-    </div>
-
     <script src="js/script.js"></script>
 </body>
 </html>
