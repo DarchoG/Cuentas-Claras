@@ -1,205 +1,283 @@
 :root {
-    --azulbbva: #3E54AC;
-    --blanco: #F7EFE5;
-    --moradosoft: #C3ACD0;
-    --grisnegroso: #333;
-    --Griss: #a3a7be;
-    --azulfuerte: #1f2333;
-  }
-  
-  html {
-    height: 100%;
-    box-sizing: border-box;
-    display: flex; 
-    flex-direction: column; 
-  }
-  
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-  
-  body {
-    height: 100%;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: var(--blanco);
-    color: var(--grisnegroso);
-    display: flex; /* Usar Flexbox en el body */
-    flex-direction: column; /* Alinear elementos en columna */
-  }
-  
-  h1 {
-    text-align: center;
-    color: var(--blanco);
-    font-size: 3.5rem;
-    margin-top: 20px;
-  }
-  
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--azulfuerte);
-    padding: 10px 20px;
-  }
-  
+  --azulbbva: #3E54AC;
+  --blanco: #F7EFE5;
+  --moradosoft: #C3ACD0;
+  --grisnegroso: #333;
+  --Griss: #a3a7be;
+  --azulfuerte: #1f2333;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: var(--blanco);
+  color: var(--grisnegroso);
+  display: flex;
+  /* Usar Flexbox en el body */
+  flex-direction: column;
+  /* Alinear elementos en columna */
+}
+
+h1 {
+  text-align: center;
+  color: var(--blanco);
+  font-size: 3.5rem;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--azulfuerte);
+  padding: 10px 20px;
+}
+
+#menu-toggle {
+  background-color: var(--azulfuerte);
+  border: none;
+  color: var(--blanco);
+  font-size: 2rem;
+  cursor: pointer;
+  margin-right: auto;
+}
+
+.centro {
+  background-color: var(--azulfuerte);
+  color: var(--blanco);
+  flex: 1;
+  text-align: center;
+}
+
+.derecha {
+  background-color: var(--Griss);
+  margin-left: 20px;
+  /* Espacio entre el logo y el contacto */
+}
+
+nav {
+  background-color: var(--azulfuerte);
+  color: white;
+  transition: max-height 0.3s ease-out;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  padding: 10px 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+nav a:hover {
+  background-color: var(--moradosoft);
+  color: var(--azulbbva);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
   #menu-toggle {
-    background-color: var(--azulfuerte);
-    border: none;
-    color: var(--blanco);
-    font-size: 2rem;
-    cursor: pointer;
-    margin-right:  auto;
+    font-size: 1.5rem;
+    padding: 5px;
   }
-  
-  .centro {
-    background-color: var(--azulfuerte);
-    color: var(--blanco);
-    flex: 1;
-    text-align: center;
-  }
-  
-  .derecha {
-    background-color: var(--Griss);
-    margin-left: 20px; /* Espacio entre el logo y el contacto */
-  }
-  
-  nav {
-    background-color: var(--azulfuerte);
-    color: white;
-    transition: max-height 0.3s ease-out;
-  }
-  
+
   nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  nav li {
-    padding: 10px 20px;
-  }
-  
-  nav a {
-    color: white;
-    text-decoration: none;
-    display: block;
-  }
-  
-  nav a:hover {
-    background-color: var(--moradosoft);
-    color: var(--azulbbva);
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 600px) {
-    #menu-toggle {
-        font-size: 1.5rem;
-        padding: 5px;
-    }
-  
-    nav ul {
-        padding: 10px;
-    }
-  
-    nav li {
-        padding: 15px;
-    }
-  }
-  
-  nav a {
-    color: white;
-    text-decoration: none;
-    display: block;
-  }
-  
-  nav a:hover {
-    background-color: var(--moradosoft);
-    color: var(--azulbbva);
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .ventanas {
-    display: flex;
-    flex-direction: column; /* Cambiado a columna */
-    align-items: center; /* Centramos las ventanas */
-    gap: 20px; /* Espaciado entre las ventanas */
-    margin-top: 20px;
-  }
-  
-  .ventana {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    width: 300px; /* Ancho de cada ventana */
-    text-align: center;
-    background-color: var(--blanco);
-  }
-  
-  .marcador {
-    background-color: var(--moradosoft);
-    color: var(--blanco);
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    font-style: italic;
   }
-  
-  /* Responsive design */
-  @media (max-width: 600px) {
-    #menu-toggle {
-        font-size: 1.5rem;
-        padding: 5px;
-    }
-  
-    nav ul {
-        padding: 10px;
-    }
-  
-    nav li {
-        padding: 15px;
-    }
+
+  nav li {
+    padding: 15px;
   }
-  
-  .botones-container {
-     display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    margin-top: auto; /* Empuja el contenedor de botones hacia abajo */
-    padding: 20px; /* Espaciado interno */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+nav a:hover {
+  background-color: var(--moradosoft);
+  color: var(--azulbbva);
+}
+
+.hidden {
+  display: none;
+}
+
+.ventanas {
+  display: flex;
+  flex-direction: column;
+  /* Cambiado a columna */
+  align-items: center;
+  /* Centramos las ventanas */
+  gap: 20px;
+  /* Espaciado entre las ventanas */
+  margin-top: 20px;
+}
+
+.ventana {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  width: 300px;
+  /* Ancho de cada ventana */
+  text-align: center;
+  background-color: var(--blanco);
+}
+
+.marcador {
+  background-color: var(--moradosoft);
+  color: var(--blanco);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  #menu-toggle {
+    font-size: 1.5rem;
+    padding: 5px;
   }
-  
-  .botones {
-      display: flex; /* Utiliza Flexbox para alinear horizontalmente */
-      justify-content: center; /* Centra los botones horizontalmente */
-      gap: 10px; /* Espacio entre los botones */
-      background-color: var(--Griss); /* Fondo del contenedor de botones */
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  nav ul {
+    padding: 10px;
   }
-  
-  .boton {
-    background-color: var(--azulbbva);
-    color: var(--blanco);
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 5px; /* Espacio entre botones */
-    cursor: pointer;
-    font-size: 1rem;
+
+  nav li {
+    padding: 15px;
   }
-  
-  .boton:hover {
-    background-color: var(--moradosoft);
+}
+
+.botones-container {
+  display: flex;
+  justify-content: center;
+  /* Centra horizontalmente */
+  margin-top: auto;
+  /* Empuja el contenedor de botones hacia abajo */
+  padding: 20px;
+  /* Espaciado interno */
+}
+
+.botones {
+  display: flex;
+  /* Utiliza Flexbox para alinear horizontalmente */
+  justify-content: center;
+  /* Centra los botones horizontalmente */
+  gap: 10px;
+  /* Espacio entre los botones */
+  background-color: var(--Griss);
+  /* Fondo del contenedor de botones */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.boton {
+  background-color: var(--azulbbva);
+  color: var(--blanco);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 5px;
+  /* Espacio entre botones */
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.boton:hover {
+  background-color: var(--moradosoft);
+}
+
+.sin-subrayado {
+  text-decoration: none;
+}
+
+
+
+/*Estilos de movimientos*/
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.movements-count {
+  padding: 1rem 0;
+  font-size: 1.1rem;
+}
+
+.movement-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movement-card p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.icon {
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.botton_new {
+  margin-top: 2%;
+  display: flex;
+  height: auto;
+  margin-left: 70%;
+  position: relative;
+}
+
+.nuevo-movimiento-btn {
+  font-family: Arial, sans-serif;
+  background-color: #1f2333;
+  color: var(--blanco);
+  height: 40px; /* Ajusta a una altura que se vea bien */
+  margin: 0;
+  font-weight: bold; 
+  padding: 0.5rem 1rem; 
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0.5rem;
   }
-  
-  .sin-subrayado{
-    text-decoration: none;
-  }
+}

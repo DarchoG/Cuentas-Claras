@@ -1,0 +1,120 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo del contenedor principal */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #C3ACD0;
+    font-size: 3.5rem;
+    margin-top: 20px;
+
+}
+
+.login-container {
+    width: 100%;
+    max-width: 350px;
+    /* Ancho máximo para pantallas grandes */
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-container .user_icono {
+    font-size: 80px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.login-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.login-container .input {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.login-container .input input {
+    width: 100%;
+    padding: 10px 35px 10px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+}
+
+.login-container .input .icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-container .registro {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    margin: 20px;
+}
+
+
+.login-container .registro input {
+    margin-right: 5px;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 15px;
+    }
+
+    .login-container .user-icono {
+        font-size: 60px;
+    }
+
+    .login-container h2 {
+        font-size: 20px;
+    }
+
+    .login-container .input input {
+        font-size: 14px;
+        padding: 8px 30px 8px 10px;
+    }
+
+    .login-container button {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
