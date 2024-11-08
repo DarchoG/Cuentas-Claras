@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" /> 
+</head>
+
+<body>
+
+    <header class="header">
+        <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
+            &#9776; 
+        </button>
+        <div class="centro">
+            <a href="./index.html" class="sin-subrayado">
+                <h1>SelfBank</h1>
+            </a>
+        </div>  
+    </header>
+        
+    <nav id="menu" class="hidden">
+        <ul>
+            <!-- Boton Notificaciones -->
+            <li><a href="{{ url_for('notificaciones') }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                notifications
+            </span><br>&nbsp;&nbsp;Notificaciones</a></li>
+            
+            <!-- Boton Movimientos -->
+            <li><a href="{{ url_for('movimientos') }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                currency_exchange
+            </span><br>&nbsp;&nbsp;Movimientos</a></li>
+
+            <!-- Boton Analisis Gastos -->
+            <li><a href="{{ url_for('analisis_gastos') }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                search_insights
+                </span><br>Analisis Gastos</a></li>
+
+            <!-- Boton Ahorros -->
+            <li><a href="{{ url_for('ahorros') }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                savings
+                </span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ahorros</a></li>
+
+            <!-- Boton Pagar -->
+            <li><a href="{{ url_for('pagos') }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                payments
+                </span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pagar</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        {% block content1 %}
+        {% endblock %}
+    </main>
+
+    {% block content2 %}
+    {% endblock %}
+
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+
+</body>
+</html>
