@@ -20,7 +20,7 @@ def analisis_gastos():
 
 @app.route("/ahorros")
 def ahorros():
-    return render_template("ahorros.html")
+    return render_template("ahorros.php")
 
 @app.route("/pagos")
 def pagos():
