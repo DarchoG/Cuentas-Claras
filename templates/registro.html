@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/style_registro.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style_registro.css')}}">
     <title>Registro</title>
 </head>
 <body>
@@ -23,16 +24,16 @@
             <label>Imagen de perfil:</label>
             <div class="profile-images">
                 <label>
-                    <input type="radio" name="profileImage" value="img/ico1.png" required>
-                    <img src="img/ico1.png" alt="Imagen 1">
+                    <input type="radio" name="profileImage" value="{{ url_for('static', filename='img/ico1.png') }}" required>
+                    <img src="{{ url_for('static', filename='img/ico1.png') }}" alt="Imagen 1">
                 </label>
                 <label>
-                    <input type="radio" name="profileImage" value="img/ico2.png" required>
-                    <img src="img/ico2.png" alt="Imagen 2">
+                    <input type="radio" name="profileImage" value="{{ url_for('static', filename='img/ico2.png') }}" required>
+                    <img src="{{ url_for('static', filename='img/ico2.png') }}" alt="Imagen 2">
                 </label>
                 <label>
-                    <input type="radio" name="profileImage" value="img/ico3.png" required>
-                    <img src="img/ico3.png" alt="Imagen 3">
+                    <input type="radio" name="profileImage" value="{{ url_for('static', filename='img/ico3.png') }}" required>
+                    <img src="{{ url_for('static', filename='img/ico3.png') }}" alt="Imagen 3">
                 </label>
                 
             </div>
