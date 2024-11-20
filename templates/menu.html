@@ -19,6 +19,20 @@
                 <h1>SelfBank</h1>
             </a>
         </div>  
+        <div class="derecha">
+            <button id="user-menu-toggle" aria-expanded="false">
+                <span class="material-symbols-outlined">
+                    account_circle
+                </span>
+            </button>
+            <div id="user-menu">
+                <ul>
+                    <li><a href="{{ url_for('perfil_user') }}">Ver Perfil</a></li>
+                    <li><a href="{{ url_for('usuario_modifica') }}">Configurar</a></li>
+                    <li><a href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
     </header>
         
     <nav id="menu" class="hidden">
@@ -59,6 +73,25 @@
     {% endblock %}
 
     <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Mostrar/Ocultar el menú al hacer clic en el botón
+            $("#user-menu-toggle").on("click", function () {
+                $("#user-menu").toggle(); // Alternar visibilidad
+                const isExpanded = $(this).attr("aria-expanded") === "true";
+                $(this).attr("aria-expanded", !isExpanded);
+            });
+
+            // Cerrar el menú si se hace clic fuera de él
+            $(document).on("click", function (event) {
+                if (!$(event.target).closest(".derecha").length) {
+                    $("#user-menu").hide(); // Ocultar menú
+                    $("#user-menu-toggle").attr("aria-expanded", "false");
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

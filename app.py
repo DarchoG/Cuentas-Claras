@@ -116,6 +116,18 @@ def logout():
     session.pop('user_id', None)  # Eliminar el ID de usuario de la sesión
     return redirect(url_for('login'))  # Redirigir al login
 
+@app.route("/usuario_modifica")
+def usuario_modifica():
+    if 'user_id' not in session:  # Verificar si el usuario está autenticado
+        return redirect(url_for('login'))  # Redirigir al login si no está autenticado
+    return render_template('usuario_modifica.html')
+
+@app.route("/perfil_user")
+def perfil_user():
+    if 'user_id' not in session:  # Verificar si el usuario está autenticado
+        return redirect(url_for('login'))  # Redirigir al login si no está autenticado
+    return render_template('perfil_user.html')
+
 if __name__ == "__main__":
 
     app.run(debug = True)

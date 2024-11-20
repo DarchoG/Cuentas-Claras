@@ -203,3 +203,91 @@ nav a:hover {
 .sin-subrayado{
   text-decoration: none;
 }
+
+
+  /* Contenedor del menú de usuario */
+  .derecha {
+      position: relative;
+      display: inline-block;
+      margin-right: 30px; 
+  }
+
+  /* Botón de usuario */
+  #user-menu-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 28px; 
+      color: #333; 
+  }
+
+  #user-menu-toggle:hover {
+      color: #6a6a6a; /* Efecto hover */
+  }
+
+  /* Contenedor del menú desplegable */
+  #user-menu {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background-color: #ffffff; 
+      border: 1px solid #ddd;
+      border-radius: 10px; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+      display: none; 
+      z-index: 1000;
+  }
+
+  /* Lista del menú */
+  #user-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  #user-menu ul li {
+      padding: 12px 20px; 
+      border-bottom: 1px solid #f0f0f0; 
+      text-align: left;
+  }
+
+  #user-menu ul li:last-child {
+      border-bottom: none; 
+  }
+
+  #user-menu ul li a {
+      text-decoration: none;
+      color: #555; 
+      font-size: 14px;
+      display: block;
+  }
+
+  #user-menu ul li a:hover {
+      background-color: #e8eef7; 
+      color: #333; 
+      border-radius: 8px; 
+  }
+#user-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#user-menu ul li {
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+#user-menu ul li:last-child {
+  border-bottom: none;
+}
+
+#user-menu ul li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+#user-menu ul li a:hover {
+  background-color: #f5f5f5;
+}
