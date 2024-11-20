@@ -14,14 +14,13 @@ conn = psycopg2.connect(
     options="-c client_encoding=UTF8"
 )
 
-# Configurar clave secreta para las sesiones
 app.secret_key = 'mi_clave_secreta'
 
 @app.route("/")
 def login():
     return render_template('login.html')
 
-@app.route("/login", methods=["GET", "POST"])  # Ruta para el login
+@app.route("/login", methods=["GET", "POST"])  
 def login_post():
     if request.method == "POST":
         # Obtener los datos del formulario
@@ -29,14 +28,12 @@ def login_post():
         contrasena = request.form["password"]
 
         try:
-            # Verificar las credenciales en la base de datos
             cursor = conn.cursor()
             query = "SELECT * FROM usuarios WHERE correo = %s AND contraseña = %s"
             cursor.execute(query, (correo, contrasena))
             usuario = cursor.fetchone()  # Buscar el primer usuario que coincida
 
             if usuario:
-                # Si el usuario existe, almacenar su ID en la sesión
                 session['user_id'] = usuario[0]  # Almacenar el ID del usuario en la sesión
                 return redirect(url_for('index'))  # Redirigir al índice (página principal)
             else:
@@ -52,11 +49,11 @@ def login_post():
 def registro():
     if request.method == "POST":
         # Obtener datos del formulario
-        nombre = request.form["name"]  # Nombre del usuario
-        correo = request.form["email"]  # Correo del usuario
-        contrasena = request.form["password"]  # Contraseña
-        ciudad = request.form["profileImage"]  # Ruta de la imagen seleccionada
-        status = True  # Estado inicial por defecto
+        nombre = request.form["name"]  
+        correo = request.form["email"]  
+        contrasena = request.form["password"]  
+        ciudad = request.form["profileImage"] 
+        status = True 
 
         try:
             # Insertar datos en la tabla 'usuarios'
@@ -92,6 +89,12 @@ def movimientos():
     if 'user_id' not in session:  # Verificar si el usuario está autenticado
         return redirect(url_for('login'))  # Redirigir al login si no está autenticado
     return render_template("movimientos.html")
+
+@app.route("/registro_movimiento")
+def registro_movimiento():
+    if 'user_id' not in session:  # Verificar si el usuario está autenticado
+        return redirect(url_for('login'))  # Redirigir al login si no está autenticado
+    return render_template("registro_movimiento.html")
 
 @app.route("/analisisgastos")
 def analisis_gastos():
@@ -129,7 +132,6 @@ def usuario_modifica():
         usuario = cursor.fetchone()  # Obtener la información del usuario
         cursor.close()
 
-        # Si el formulario se envía con un método POST
         if request.method == "POST":
             nombre = request.form["name"]
             correo = request.form["email"]

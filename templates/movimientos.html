@@ -11,9 +11,9 @@
   <body>
     {% extends "menu.html" %}
     {% block content1 %}
-      <div class="botton_new">
-        <button type="submit" class="nuevo-movimiento-btn">Agregar movimiento</button>
-      </div>
+    <div class="bottom_movimiento">
+      <a href="{{ url_for('registro_movimiento') }}" class="btn-modificar">Agregar movimiento</a>
+  </div>
     <div class="container">
         <div class="movements-count">Movimientos este mes: 5</div>
 
