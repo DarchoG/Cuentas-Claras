@@ -116,11 +116,51 @@ def logout():
     session.pop('user_id', None)  # Eliminar el ID de usuario de la sesión
     return redirect(url_for('login'))  # Redirigir al login
 
-@app.route("/usuario_modifica")
+@app.route("/usuario_modifica", methods=["GET", "POST"])
 def usuario_modifica():
     if 'user_id' not in session:  # Verificar si el usuario está autenticado
         return redirect(url_for('login'))  # Redirigir al login si no está autenticado
-    return render_template('usuario_modifica.html')
+
+    user_id = session['user_id']
+    try:
+        # Obtener los datos actuales del usuario
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuarios WHERE id_usuario = %s", (user_id,))
+        usuario = cursor.fetchone()  # Obtener la información del usuario
+        cursor.close()
+
+        # Si el formulario se envía con un método POST
+        if request.method == "POST":
+            nombre = request.form["name"]
+            correo = request.form["email"]
+            contrasena = request.form["password"]
+            icono = request.form["profileImage"]
+            status = True if 'deactivate_account' not in request.form else False  # Desactivar la cuenta si está marcado
+
+            # Actualizar la información en la base de datos
+            cursor = conn.cursor()
+            query = """
+                UPDATE usuarios
+                SET nombre_usuario = %s, correo = %s, contraseña = %s, ciudad = %s, status = %s
+                WHERE id_usuario = %s
+            """
+            cursor.execute(query, (nombre, correo, contrasena, icono, status, user_id))
+            conn.commit()
+            cursor.close()
+
+            # Si el usuario desactivó su cuenta, cerrar sesión y redirigir al login
+            if not status:
+                session.pop('user_id', None)  # Eliminar el ID de usuario de la sesión
+                return redirect(url_for('login'))  # Redirigir al login si el estado es 'false'
+
+            return redirect(url_for('perfil_user'))
+
+    except Exception as e:
+        print("Error al modificar los datos del usuario:", e)
+        return "Ocurrió un error al modificar los datos del perfil"
+
+    return render_template("usuario_modifica.html", usuario=usuario)
+
 
 @app.route("/perfil_user")
 def perfil_user():
