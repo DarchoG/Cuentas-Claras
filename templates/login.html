@@ -12,16 +12,18 @@
             <h1>SelfBank</h1>
         </div>
         <h2>Inicio Sesión</h2>
-        <div class="input">
-            <input type="text" placeholder="Username" required>
-        </div>
-        <div class="input">
-            <input type="password" placeholder="Password" required>
-        </div>
-        <div class="registro">
-            <p>¿Todavía no tienes cuenta?<a href="{{ url_for('registro') }}">Registrate aquí</a></p>
-        </div>
-        <button>Entrar</button>
+        <form action="/login" method="POST">  <!-- Agregar el formulario y método POST -->
+            <div class="input">
+                <input type="email" placeholder="Correo electrónico" name="email" required>  <!-- Asegúrate de que los campos tengan el atributo name -->
+            </div>
+            <div class="input">
+                <input type="password" placeholder="Contraseña" name="password" required>  <!-- Asegúrate de que los campos tengan el atributo name -->
+            </div>
+            <div class="registro">
+                <p>¿Todavía no tienes cuenta? <a href="{{ url_for('registro') }}">Regístrate aquí</a></p>
+            </div>
+            <button type="submit">Entrar</button>  <!-- Agregar un botón de tipo submit -->
+        </form>
     </div>
 </body>
 </html>
