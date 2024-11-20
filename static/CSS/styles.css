@@ -205,68 +205,44 @@ nav a:hover {
 }
 
 
-  /* Contenedor del menú de usuario */
-  .derecha {
-      position: relative;
-      display: inline-block;
-      margin-right: 30px; 
-  }
+/* Botón del usuario */
+#user-menu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 30px; 
+  color: #4a4a4a; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-  /* Botón de usuario */
-  #user-menu-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 28px; 
-      color: #333; 
-  }
+#user-menu-toggle:hover {
+  background-color: #e3e7f1; 
+  color: #2a2a2a; 
+}
 
-  #user-menu-toggle:hover {
-      color: #6a6a6a; /* Efecto hover */
-  }
+/* Estilo del menú desplegable */
+#user-menu {
+  margin-top: 20px;
+  position: absolute;
+  top: 60px; 
+  right: 0;
+  background-color: #ffffff; 
+  border: 1px solid #dcdcdc; 
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); 
+  overflow: hidden; 
+  width: 200px; 
+  display: none; 
+  z-index: 1000;
+}
 
-  /* Contenedor del menú desplegable */
-  #user-menu {
-      position: absolute;
-      top: 50px;
-      right: 0;
-      background-color: #ffffff; 
-      border: 1px solid #ddd;
-      border-radius: 10px; 
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-      display: none; 
-      z-index: 1000;
-  }
-
-  /* Lista del menú */
-  #user-menu ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-  }
-
-  #user-menu ul li {
-      padding: 12px 20px; 
-      border-bottom: 1px solid #f0f0f0; 
-      text-align: left;
-  }
-
-  #user-menu ul li:last-child {
-      border-bottom: none; 
-  }
-
-  #user-menu ul li a {
-      text-decoration: none;
-      color: #555; 
-      font-size: 14px;
-      display: block;
-  }
-
-  #user-menu ul li a:hover {
-      background-color: #e8eef7; 
-      color: #333; 
-      border-radius: 8px; 
-  }
+/* Lista del menú */
 #user-menu ul {
   list-style: none;
   padding: 0;
@@ -274,20 +250,22 @@ nav a:hover {
 }
 
 #user-menu ul li {
-  padding: 10px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-#user-menu ul li:last-child {
-  border-bottom: none;
+  padding: 12px 16px; /* Espaciado interno */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #user-menu ul li a {
   text-decoration: none;
-  color: #333;
+  color: #4a4a4a; /* Texto gris oscuro */
+  font-size: 15px; /* Tamaño agradable */
   display: block;
 }
 
-#user-menu ul li a:hover {
-  background-color: #f5f5f5;
+#user-menu ul li:hover {
+  background-color: #e3e7f1; /* Fondo azul claro al pasar el ratón */
+  color: #333; /* Texto más oscuro */
+}
+
+#user-menu ul li:hover a {
+  color: #333; /* Texto más oscuro */
 }
