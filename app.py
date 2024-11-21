@@ -1,10 +1,8 @@
-from flask import Flask, render_template, send_file, Response #type: ignore
+from flask import Flask, render_template, send_file, request,redirect,url_for, session
 from scripts.analisisgastos import graficar 
-from flask import Flask, render_template, request,redirect,url_for, session
 import psycopg2
 
 app = Flask(__name__)
-
 
 # Configuración de conexión con PostgreSQL
 conn = psycopg2.connect(
@@ -104,6 +102,11 @@ def analisis_gastos():
         return redirect(url_for('login'))  # Redirigir al login si no está autenticado
     return render_template("analisisgastos.html")
 
+@app.route("/grafica")
+def graficarRuta():
+
+    return graficar()
+
 @app.route("/ahorros")
 def ahorros():
     if 'user_id' not in session:  # Verificar si el usuario está autenticado
@@ -116,10 +119,6 @@ def pagos():
         return redirect(url_for('login'))  # Redirigir al login si no está autenticado
     return render_template("pagos.html")
 
-@app.route("/grafica")
-def graficarRuta():
-
-    return graficar()
 @app.route("/logout")
 def logout():
     session.pop('user_id', None)  # Eliminar el ID de usuario de la sesión
