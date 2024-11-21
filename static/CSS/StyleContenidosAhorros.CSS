@@ -1,0 +1,243 @@
+.Contenedor-padre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Altura total de la pantalla */
+    
+    
+}
+.credito{
+
+    font-size: 100px;
+}
+.debito-text{
+    display: flex;
+    font-size: 50px;
+    justify-content: center;
+}
+.Contenedor-hijo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -2%; /* Espacio entre secciones */
+    flex-direction: column;
+}
+
+.cuadrito {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cuadrito2 {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.dinero {
+    width: 100%;
+    font-size: 100px;
+    background-color: transparent;
+    text-align: center;
+    border: none;
+}
+
+#dinero_signo{
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+    justify-content: center;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    padding-left: 10%;
+}
+#signo {
+    font-size: 100px;
+    margin-right: 5px;
+}
+
+#ahorro {
+    margin: 10px 0;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.secondary {
+    background-image: linear-gradient(to right, #6c757d, #adb5bd);
+}
+
+.secondary:hover {
+    background-image: linear-gradient(to right, #848b92, #adb5bd);
+}
+
+#grafica {
+    margin-top: -25%;
+    object-fit: contain;
+    justify-content: center; 
+    width: 500px;
+}
+#graficaC {
+    margin-top: -25%;
+    object-fit: contain;
+    justify-content: center; 
+    width: 500px;
+}
+.grafica_leyenda {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    
+}
+
+.leyenda{
+    padding-bottom: 1%;
+    
+}
+#titulo_leyenda{
+    font-size: 50px;
+    margin-top: -8%;
+    margin-bottom: 25px;
+}
+div#DD::before {
+    content: ''; 
+    width: 20px;
+    height: 20px;
+    background-color: #3498db;
+    display: inline-block;
+    margin-right: 10px; 
+    border-radius: 3px; 
+}
+div#LC::before {
+    content: ''; 
+    width: 20px;
+    height: 20px;
+    background-color: #3498db;
+    display: inline-block;
+    margin-right: 10px; 
+    border-radius: 3px; 
+}
+div#AhorroL, div#Gastos, div#DR, div#DD,div#LC,div#GastosCredito, div#Ingresos {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px; 
+    display: flex; 
+    align-items: center; 
+}
+
+.cuadro-hija{
+    display: flex;
+    flex-direction: column;
+}
+div#Gastos::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #9b59b6; /* Color representativo de 'Gastos' */
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+div#GastosCredito::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #e74c3c; /* Color representativo de 'Gastos' */
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+div#AhorroL::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #f1c40f; /* Color representativo de 'Ahorro' */
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+div#Ingresos::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #e74c3c; /* Color representativo de 'ingresos' */
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+div#DR::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: #2ecc71; /* Color representativo de 'Dinero Reservado' */
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+.EstadoActual{
+    display: flex;
+    align-content: center;
+}
+.void{
+    opacity: 0;
+    
+}
+.limite_ahorro{
+    display: flex;
+    flex-direction: column;
+    border:black solid;
+    width: 50%;
+    height: 400px;
+    margin-top: -2%;
+}
+
+.maximo{
+    display: flex;
+    
+}
+#LMT{
+    align-content: center;
+    font-size: 35px;
+}
+#id2{
+    width: 100%;
+    border:black solid;
+
+}
+#separate{
+    height: 100px;
+    font-size: 24px;
+
+}
+.dinero_disponible{
+    border-color: black solid;
+}
+#max_dinero_debito{
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+}
+#CDHA{
+
+    width: 100px;
+    height: 100px;
+    
+}
+#Cabecera{
+    padding-left: 1%;
+}
