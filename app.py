@@ -1,4 +1,5 @@
-from flask import Flask, render_template #type: ignore
+from flask import Flask, render_template, send_file, Response #type: ignore
+from scripts.analisisgastos import graficar 
 
 app = Flask(__name__)
 
@@ -33,6 +34,11 @@ def ahorros():
 @app.route("/pagos")
 def pagos():
     return render_template("pagos.html")
+
+@app.route("/grafica")
+def graficarRuta():
+
+    return graficar()
 
 if __name__ == "__main__":
 
