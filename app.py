@@ -111,7 +111,7 @@ def graficarRuta():
 def ahorros():
     if 'user_id' not in session:  # Verificar si el usuario está autenticado
         return redirect(url_for('login'))  # Redirigir al login si no está autenticado
-    return render_template("ahorros.php")
+    return render_template("ahorros.html")
 
 @app.route("/pagos")
 def pagos():
