@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style_perfil.css') }}">
+</head>
+<body>
+
+    {% extends "menu.html" %}
+
+    {% block content1 %}
+    <div class="perfil-container">
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% else %}
+            <h3 class="perfil-title">Datos del perfil</h3>
+            <div class="perfil-info">
+                <div class="perfil-img">
+                    <img src="{{ usuario[2] }}" alt="Icono de perfil" class="perfil-icon">
+                </div>
+                <div class="perfil-details">
+                    <p><strong>Nombre:</strong> {{ usuario[0] }}</p>
+                    <p><strong>Correo:</strong> {{ usuario[1] }}</p>
+                </div>
+            </div>
+            <div class="perfil-actions">
+                <a href="{{ url_for('usuario_modifica') }}" class="btn-modificar">Modificar mis datos</a>
+            </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+</body>
+</html>

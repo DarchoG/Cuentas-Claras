@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar datos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style_usuario_modifica.css') }}">
+</head>
+<body class="usuario-modifica-body">
+
+    {% extends "menu.html" %}
+
+    {% block content1 %}
+    <h3 class="usuario-modifica-titulo">Modificar datos del perfil</h3>
+
+    <form class="usuario-modifica-form" method="POST">
+        <!-- Campo para Nombre -->
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" class="usuario-modifica-input" value="{{ usuario[1] }}" required>
+
+        <!-- Campo para Correo -->
+        <label for="email">Correo:</label>
+        <input type="email" id="email" name="email" class="usuario-modifica-input" value="{{ usuario[2] }}" required>
+
+        <!-- Campo para Contraseña -->
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" class="usuario-modifica-input" value="{{ usuario[3] }}" required>
+
+        <!-- Selección de Icono -->
+        <label for="profileImage">Selecciona tu icono:</label><br>
+        <input type="radio" id="icon1" name="profileImage" class="usuario-modifica-radio" value="/static/img/ico1.png" {% if usuario[4] == '/static/img/ico1.png' %} checked {% endif %}>
+        <img src="/static/img/ico1.png" alt="Icono 1" class="usuario-modifica-icono" style="width: 40px; height: 40px;">
+        
+        <input type="radio" id="icon2" name="profileImage" class="usuario-modifica-radio" value="/static/img/ico2.png" {% if usuario[4] == '/static/img/ico2.png' %} checked {% endif %}>
+        <img src="/static/img/ico2.png" alt="Icono 2" class="usuario-modifica-icono" style="width: 40px; height: 40px;">
+
+        <input type="radio" id="icon3" name="profileImage" class="usuario-modifica-radio" value="/static/img/ico3.png" {% if usuario[4] == '/static/img/ico3.png' %} checked {% endif %}>
+        <img src="/static/img/ico3.png" alt="Icono 3" class="usuario-modifica-icono" style="width: 40px; height: 40px;">
+
+        <!-- Opción para desactivar cuenta -->
+        <label for="deactivate_account">Desactivar cuenta:</label>
+        <input type="checkbox" id="deactivate_account" name="deactivate_account" class="usuario-modifica-checkbox">
+
+        <button type="submit" class="usuario-modifica-boton">Guardar cambios</button>
+    </form>
+    {% endblock %}
+</body>
+</html>
+

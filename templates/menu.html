@@ -15,10 +15,19 @@
             &#9776; 
         </button>
         <div class="centro">
-            <a href="./index.html" class="sin-subrayado">
+            <a href="{{ url_for('index') }}" class="sin-subrayado">
                 <h1>SelfBank</h1>
             </a>
         </div>  
+        <div class="derecha">
+            <a href="{{ url_for('perfil_user') }}">
+                <button id="user-menu-toggle">
+                    <span class="material-symbols-outlined">
+                        account_circle
+                    </span>
+                </button>
+            </a>
+        </div>
     </header>
         
     <nav id="menu" class="hidden">
