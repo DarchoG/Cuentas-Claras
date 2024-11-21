@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahorros</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/stylesahorros.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/StyleContenidosAhorros.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css') }}">
+
+   
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+   
+    
+</head>
+<body>
+
+   <!-- Cabecera -->
+   <header class="header">
+    <!-- Menu hamburguesa -->
+    <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
+        &#9776; 
+    </button>
+    <div class="centro">
+        <a href="./index.html" class="sin-subrayado">
+            <h1>SelfBank</h1>
+        </a>
+    </div>
+    
+    <h1> <span id="tarjeta">{% for tarjeta in data.tipo_tarjeta %}{{ tarjeta }}{% endfor %}</span></h1>
+ </header>
+
+    <nav id="menu" class="hidden">
+        <ul>
+            <!-- Boton Notificaciones -->
+            <li><a href="./notificaciones.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                notifications
+            </span><br>&nbsp;&nbsp;Notificaciones</a></li>
+            
+            <!-- Boton Movimientos -->
+            <li><a href="./movimientos.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                currency_exchange
+            </span><br>&nbsp;&nbsp;Movimientos</a></li>
+
+            <!-- Boton Analisis Gastos -->
+            <li><a href="./analisisgastos.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                search_insights
+                </span><br>Analisis Gastos</a></li>
+
+            <!-- Boton Ahorros -->
+            <li><a href="./ahorros.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                savings
+                </span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ahorros</a></li>
+
+            <!-- Boton Pagar -->
+            <li><a href="./pagos.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
+                payments
+                </span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pagar</a></li>
+        </ul>
+    </nav> 
+
+    <main>
+        <h2 id="Cabecera">Ahorros</h2>
+            
+    </main>
+    <div class= "Contenedor-padre"> 
+        <div class= "Contenedor-hijo">
+            <div class='cuadrito' id= "ModoDebito">
+                <div id=dinero_signo><div id='signo'>$</div><div><input min = 0 type='number' id='dinero_modificado' class='dinero' value="{% for dinero in data.dinero_reservado %}{{ dinero }}{% endfor %}" step='0.01'></div>
+            </div>
+
+            <div id=ahorro>Ahorro Total</div>
+            
+            <div><button id = botonModificar class='btn secondary' onclick='enviaDatos()'>Modificar</button></div>
+            
+            <div id="mensaje"  style="color: red; display: none; ">No se pueden ingresar numeros negativos</div>
+            <div id="mensaje2" style="color: red; display: none;">No hay suficiente dinero.</div>
+            <!--  Modo tarjetas de credito -->
+
+            
+            </div>
+            <div class='cuadrito2' id= "ModoCredito">
+                    <div id=dinero_signo><div id='signo'>$</div>
+                    <div class="credito">
+                        <span id="max_dinero_credito">{% for dinero in data.dinero_disponible %}{{ dinero }}{% endfor %}</span>
+                    </div>
+                </div>
+                <div id=separate>Limite de credito</div>
+            </div>
+            <!--  Termina modo tarjetas de credito -->
+
+            <!--  Imagen de la grafica de ahorros -->
+            <div class="cuadro-hija" >
+                <div class="EstadoActual">
+                    <div class = "void">sds</div>
+                    <div class = "void">sds</div>
+                    <div class = "void">sds</div>
+                    <div class = "void">sds</div>
+                    <div class = "void">sds</div>
+                    <div class = "void">sds</div>
+                    <div class = "void">sds</div>
+                    
+                    <div>
+                        <div id="titulo_leyenda">Estado actual</div>
+                        <div class="leyenda" id="DD">Dinero disponible</div>
+                        
+                        <div class="leyenda" id="Gastos">Gastos</div>
+                        <div class="leyenda" id="AhorroL">Ahorro</div>
+                        <div class="leyenda" id="Ingresos">Ingresos</div>
+                        <div class="leyenda" id="DR">Dinero reservado</div>
+                        <!--  Leyenda para tarjetas de credito -->
+                        <div class="leyenda" id="LC">Limite de credito</div>
+                        <div class="leyenda" id="GastosCredito">Gastos</div>
+                    </div>
+                    <div><img class="leyenda"  id = "grafica" src="{{ url_for('static', filename='img/grafico.png') }}" alt="Gráfico"></div>
+                    <div><img class="leyenda"  id = "graficaC" src="{{ url_for('static', filename='img/credito.png') }}" alt="Gráfico"></div>
+                </div>
+            </div>
+            <div id="debito-text" class="debito-text">
+                <div class="TSymbol"><img id="CDHA" src="{{ url_for('static', filename='img/CDAH.png') }}" alt="TSymbol"></div>
+                <div id="max_dinero_debito">
+                    Dinero disponible en la tarjeta: $
+                    {% for dinero in data.dinero_disponible %}
+                        {{ dinero }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="limite_ahorro" id="ApartadoCredito">
+            <div class="maximo" >
+                <div><img  width="200px" height="200px" id="limite" src="{{ url_for('static', filename='limite.png') }}" alt="Gráfico"></div>
+                <div id="LMT">Limite de gasto: </div>
+            </div>
+        
+    </div>
+    <form name="Forma01" method="POST" action="{{ url_for('actualizar_dinero_reservado') }}" style="display:none;" submit = false>
+        <input type="hidden" name="dinero_reservado" id="dinero_reservado">
+    </form>
+    <script>
+
+    function  ComprobarTarjeta(){
+        var tarjeta = $('#tarjeta').text()
+        if(tarjeta==="Débito"){
+           // setTimeout(function() { $('#ModoCredito').hide(); });
+            $('#ApartadoCredito').remove();
+            $('#graficaC').remove()
+            $('#ModoCredito').remove();
+           
+        }else if(tarjeta==="Credito"){
+            $('#ModoCredito').show();
+           
+            $('#AhorroL').remove();
+            $('#ApartadoCredito').show();
+            $('#debito-text').remove();
+            $('#grafica').remove();
+            $('#Gastos').remove();
+            $('#Ingresos').remove();
+            $('#ModoDebito').remove();
+            $('#DR').remove();
+            $('#DD').remove();
+        }
+        
+        
+    }
+    function mostrar(){
+        var dinero_reservado_actual = parseFloat($('#dinero_modificado').val())
+        var texto = $('#max_dinero_debito').text();
+        // Limpiar el texto para extraer solo el valor numérico
+        var dineroMaximo = parseFloat(texto.replace(/[^\d.-]/g, ''));
+        // Imprimir el resultado en la consola
+        console.log(dineroMaximo);
+        
+        $('#ApartadoCredito').remove();
+    }
+    function enviaDatos() {
+    // Obtener el valor del dinero modificado desde el campo de entrada
+    var cantidad = parseFloat($('#dinero_modificado').val());  // Convertimos a número
+    var texto = $('#max_dinero_debito').text(); // Capturamos el texto del dinero máximo disponible
+    var dineroMaximo = parseFloat(texto.replace(/[^\d.-]/g, '')); // Eliminamos símbolos y convertimos a número
+    var tarjeta = $('#tarjeta').text(); // Capturamos el valor de la tarjeta
+
+    // Debug en la consola
+    console.log('Cantidad ingresada: ' + cantidad);
+    console.log('Dinero máximo disponible: ' + dineroMaximo);
+    console.log('Tarjeta seleccionada: ' + tarjeta);
+
+    // Validar que la cantidad sea un número válido
+    if (isNaN(cantidad)) {
+        $('#mensaje').html('Por favor, ingrese un número válido.').show();
+        $('#botonModificar').hide();
+        setTimeout(function() { $('#botonModificar').show(); }, 3000);
+        setTimeout(function() { $('#mensaje').hide(); }, 3000);
+    } 
+    // Validar que la cantidad no sea negativa
+    else if (cantidad < 0) {
+        $('#mensaje').html('No puede ingresar números negativos.').show();
+        $('#botonModificar').hide();
+        setTimeout(function() { $('#botonModificar').show(); }, 3000);
+        setTimeout(function() { $('#mensaje').hide(); }, 3000);
+    } 
+    // Validar que no exceda el dinero máximo disponible
+    else if (cantidad > dineroMaximo) {
+        $('#mensaje2').html('No puede superar su dinero actual disponible.').show();
+        $('#botonModificar').hide();
+        setTimeout(function() { $('#botonModificar').show(); }, 3000);
+        setTimeout(function() { $('#mensaje2').hide(); }, 3000);
+    } 
+    // Valida que todo este en orden y envia
+    else {
+        $('#dinero_reservado').val(cantidad); 
+        $('#tarjeta').val(tarjeta);          
+        document.Forma01.submit();          
+    }
+    }
+
+    ComprobarTarjeta();
+    mostrar();
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
