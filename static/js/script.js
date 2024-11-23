@@ -58,3 +58,39 @@ function filterNotifications(filter) {
         }
     });
 }
+
+function toggleEgresos(ingresosInput) {
+    const egresosInput = document.getElementById('egresos');
+    ingresosInput.addEventListener('blur', function() {
+        if (ingresosInput.value) {
+            if (parseFloat(ingresosInput.value) <= 0) {
+                alert('El monto de los ingresos no puede ser menor o igual a 0');
+                ingresosInput.value = '';
+                egresosInput.disabled = false;
+            } else {
+                egresosInput.disabled = true;
+                egresosInput.value = '';
+            }
+        } else {
+            egresosInput.disabled = false;
+        }
+    });
+}
+
+function toggleIngresos(egresosInput) {
+    const ingresosInput = document.getElementById('ingresos');
+    egresosInput.addEventListener('blur', function() {
+        if (egresosInput.value) {
+            if (parseFloat(egresosInput.value) <= 0) {
+                alert('El monto de los egresos no puede ser menor o igual a 0');
+                egresosInput.value = '';
+                ingresosInput.disabled = false;
+            } else {
+                ingresosInput.disabled = true;
+                ingresosInput.value = '';
+            }
+        } else {
+            ingresosInput.disabled = false;
+        }
+    });
+}
