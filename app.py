@@ -86,7 +86,7 @@ def graficarRuta():
 @app.route("/ahorros")
 @login_required
 def ahorros():
-    return render_template("ahorros.php")
+    return render_template("ahorros.html")
 
 @app.route("/pagos")
 @login_required
