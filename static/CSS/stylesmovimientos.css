@@ -231,9 +231,16 @@ nav a:hover {
   padding: 1rem;
 }
 
-.movements-count {
+.movimientos {
   padding: 1rem 0;
   font-size: 1.1rem;
+  background-color: #f9f9f9; /* Color de fondo */
+    border: 1px solid #ccc;    /* Borde alrededor */
+    padding: 15px;              /* Espaciado interno */
+    margin: 20px 0;            /* Espaciado externo */
+    border-radius: 5px;        /* Esquinas redondeadas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+    text-align: center;
 }
 
 .movement-card {

@@ -5,6 +5,9 @@ from scripts.login import loginStatus
 from scripts.registro import registrar
 from scripts.modificar import modificarDatos
 from scripts.perfil import obtenerPerfil
+from scripts.ahorros import ahorros_info                             #Para apartado ahorro
+from scripts.actualizar_reservado import actualizar_dinero_reservado #Para apartado ahorro
+
 import psycopg2
 
 app = Flask(__name__)
@@ -67,12 +70,53 @@ def notificaciones():
 @app.route("/movimientos")
 @login_required
 def movimientos():
-    return render_template("movimientos.html")
+    user_id = session['user_id']
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT descripcion_movimiento, fecha, ingresos, egresos, tipo_tarjeta, id_movimiento, reservado
+        FROM movimientos 
+        WHERE id_usuario = %s 
+        ORDER BY fecha DESC
+    """, (user_id,))
+    movements = cur.fetchall()
+    cur.close()
+    return render_template("movimientos.html", movements=movements)
 
-@app.route("/registro_movimiento")
+@app.route("/registro_movimiento", methods=["GET", "POST"])
 @login_required
 def registro_movimiento():
-    return render_template("registro_movimiento.html")
+    user_id = session['user_id']
+    
+    if request.method == "POST":
+        descripcion = request.form['descripcion']
+        fecha = request.form['fecha']
+        ingresos = request.form['ingresos'] or 0
+        egresos = request.form['egresos'] or 0
+        id_tarjeta = request.form['id_tarjeta']
+        tipo_tarjeta = request.form[f'tipo_tarjeta_{id_tarjeta}']
+        reservado = 'reservado' in request.form
+        
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO movimientos (id_usuario, id_tarjeta, ingresos, egresos, descripcion_movimiento, fecha, tipo_tarjeta, reservado)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (user_id, id_tarjeta, ingresos, egresos, descripcion, fecha, tipo_tarjeta, reservado))
+        conn.commit()
+        cur.close()
+        
+        return redirect(url_for('movimientos'))
+    
+    # Obtener tarjetas
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT id_tarjeta, tipo_tarjeta, dinero_disponible, numero_tarjeta
+        FROM tarjetas
+        WHERE id_usuario = %s
+    """, (user_id,))
+    cards = cur.fetchall()
+    cur.close()
+    
+    return render_template("registro_movimiento.html", cards=cards)
 
 @app.route("/analisisgastos")
 @login_required
@@ -86,7 +130,12 @@ def graficarRuta():
 @app.route("/ahorros")
 @login_required
 def ahorros():
-    return render_template("ahorros.html")
+    return ahorros_info(conn)
+    
+@app.route("/actu_reservado", methods=["POST"])
+@login_required
+def actu_reservado():
+   return actualizar_dinero_reservado(conn)
 
 @app.route("/pagos")
 @login_required
