@@ -133,12 +133,12 @@
         </div>
         <div class="limite_ahorro" id="ApartadoCredito">
             <div class="maximo" >
-                <div><img  width="200px" height="200px" id="limite" src="{{ url_for('static', filename='limite.png') }}" alt="Gráfico"></div>
+                <div><img  width="200px" height="200px" id="limite" src="{{ url_for('static', filename='img/limite.png') }}" alt="Gráfico"></div>
                 <div id="LMT">Limite de gasto: </div>
             </div>
         
     </div>
-    <form name="Forma01" method="POST" action="{{ url_for('actualizar_dinero_reservado') }}" style="display:none;" submit = false>
+    <form name="Forma01" method="POST" action="{{ url_for('actu_reservado') }}" style="display:none;" submit = false>
         <input type="hidden" name="dinero_reservado" id="dinero_reservado">
     </form>
     <script>
@@ -153,7 +153,6 @@
            
         }else if(tarjeta==="Credito"){
             $('#ModoCredito').show();
-           
             $('#AhorroL').remove();
             $('#ApartadoCredito').show();
             $('#debito-text').remove();
