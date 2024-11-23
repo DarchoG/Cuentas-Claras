@@ -28,7 +28,7 @@ function actualizarStatusNoti(notificationId, status) {
     });
 }
 
-// Function to get CSRF token from cookies (if using CSRF protection)
+// Obtener el cookie de sesion
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -42,4 +42,19 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+function filterNotifications(filter) {
+    const notifications = document.querySelectorAll('.noti-card');
+    notifications.forEach(notification => {
+        if (filter === 'todo') {
+            notification.style.display = 'block';
+        } else if (filter === 'leido' && notification.dataset.status === 'leido') {
+            notification.style.display = 'block';
+        } else if (filter === 'no_leido' && notification.dataset.status === 'no_leido') {
+            notification.style.display = 'block';
+        } else {
+            notification.style.display = 'none';
+        }
+    });
 }

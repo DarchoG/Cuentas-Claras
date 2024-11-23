@@ -16,13 +16,25 @@
         <div class="container">
             <div class="notificaciones">
                 <h2>Notificaciones</h2>
+                <div class="filtro-opt">
+                    
+                    <label>
+                        <input type="radio" name="filtro" value="todo" checked onclick="filterNotifications('todo')"> Todas
+                    </label>
+                    <label>
+                        <input type="radio" name="filtro" value="leido" onclick="filterNotifications('leido')"> Leídas
+                    </label>
+                    <label>
+                        <input type="radio" name="filtro" value="no_leido" onclick="filterNotifications('no_leido')"> No Leídas
+                    </label>
+                </div>
             </div>
             {% for notification in notifications %}
-            <ul class="noti-card">     
+            <ul class="noti-card" data-status="{{ 'leido' if notification[2] else 'no_leido' }}">     
                     <li>
                         <p><strong>{{ notification[0] }}</strong> </p> 
                         <p> <b>Fecha:</b> {{ notification[1] }} </p> 
-                        <p> <b> Leido </b> 
+                        <p> <b>Leido:</b> 
                             <input type="checkbox" {% if notification[2] %}
                                                         checked
                                                     {% endif %} 
