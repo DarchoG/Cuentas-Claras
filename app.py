@@ -5,6 +5,9 @@ from scripts.login import loginStatus
 from scripts.registro import registrar
 from scripts.modificar import modificarDatos
 from scripts.perfil import obtenerPerfil
+from scripts.ahorros import ahorros_info                             #Para apartado ahorro
+from scripts.actualizar_reservado import actualizar_dinero_reservado #Para apartado ahorro
+
 import psycopg2
 
 app = Flask(__name__)
@@ -96,7 +99,12 @@ def graficarRuta():
 @app.route("/ahorros")
 @login_required
 def ahorros():
-    return render_template("ahorros.html")
+    return ahorros_info(conn)
+    
+@app.route("/actu_reservado", methods=["POST"])
+@login_required
+def actu_reservado():
+   return actualizar_dinero_reservado(conn)
 
 @app.route("/pagos")
 @login_required
