@@ -14,9 +14,8 @@
     <div class="bottom_movimiento">
       <a href="{{ url_for('registro_movimiento') }}" class="btn-modificar">Agregar movimiento</a>
     </div>
+    <div class="movimientos"><h2>Movimientos este mes: {{ movements|length }} </h2></div>
     <div class="container">
-        <div class="movements-count">Movimientos este mes: {{ movements|length }}</div>
-
         {% for movement in movements %}
         
         <div class="movement-card">
@@ -24,9 +23,13 @@
                 <p><strong>{{ movement[0] }}</strong></p>
                 <p><b>Fecha:</b> {{ movement[1] }}</p>
                 {% if movement[3] != 0 %}
-                <p><b>Egresos:</b> {{ movement[3] }}</p>
+                  {% if movement[6] %}
+                    <p><b>Reservado:</b> ${{ movement[3] }}</p>
+                  {% else %}
+                    <p><b>Egresos:</b> ${{ movement[3] }}</p>
+                  {% endif %}
                 {% else %}
-                <p><b>Ingresos:</b> {{ movement[2] }}</p>
+                  <p><b>Ingresos:</b> ${{ movement[2] }}</p>
                 {% endif %}
                 <p><b>Tipo de Tarjeta:</b> {{ movement[4] }}</p>
             </div>
