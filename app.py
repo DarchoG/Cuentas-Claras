@@ -67,7 +67,17 @@ def notificaciones():
 @app.route("/movimientos")
 @login_required
 def movimientos():
-    return render_template("movimientos.html")
+    user_id = session['user_id']
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT descripcion_movimiento, fecha, ingresos, egresos, tipo_tarjeta, id_movimiento
+        FROM movimientos 
+        WHERE id_usuario = %s 
+        ORDER BY fecha DESC
+    """, (user_id,))
+    movements = cur.fetchall()
+    cur.close()
+    return render_template("movimientos.html", movements=movements)
 
 @app.route("/registro_movimiento")
 @login_required
