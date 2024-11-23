@@ -52,7 +52,17 @@ def index():
 @app.route("/notificaciones")
 @login_required
 def notificaciones():
-    return render_template("notificaciones.html")
+    user_id = session['user_id']
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT descripcion, fecha, status, id_notificacion
+        FROM notificaciones 
+        WHERE id_usuario = %s 
+        ORDER BY fecha DESC
+    """, (user_id,))
+    notifications = cur.fetchall()
+    cur.close()
+    return render_template("notificaciones.html", notifications=notifications)
 
 @app.route("/movimientos")
 @login_required
@@ -97,6 +107,24 @@ def usuario_modifica():
 @login_required
 def perfil_user():
     return obtenerPerfil(conn)
+
+@app.route("/actualizar_status_noti", methods=["POST"])
+@login_required
+def actualizar_status_noti():
+    notification_id = request.form['notification_id']
+    status = request.form['status'] == 'true'
+    user_id = session['user_id']
+    
+    cur = conn.cursor()
+    cur.execute("""
+        UPDATE notificaciones
+        SET status = %s
+        WHERE id_notificacion = %s AND id_usuario = %s
+    """, (status, notification_id, user_id))
+    conn.commit()
+    cur.close()
+    
+    return '', 204  # En caso que no haya contenido
 
 if __name__ == "__main__":
     app.run(debug=True)

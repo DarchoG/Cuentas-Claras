@@ -211,13 +211,30 @@
     margin: 20px 0;            /* Espaciado externo */
     border-radius: 5px;        /* Esquinas redondeadas */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+    text-align: center;
 }
+.noti-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  list-style-type: none;
+}
+
 
 .notificaciones h2 {
     margin-top: 0;             /* Sin margen superior */
 }
 
 #lista-notificaciones {
-    list-style-type: none;     /* Sin viñetas */
+         /* Sin viñetas */
     padding: 0;                /* Sin espaciado interno */
 }
+

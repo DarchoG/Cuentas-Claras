@@ -4,24 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notificaciones</title>
-    <link rel="stylesheet" href="CSS/stylesnotificaciones.css">
-    <link rel="stylesheet" href="CSS/normalize.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/stylesnotificaciones.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
-
 </head>
 <body>
- 
     {% extends "menu.html" %}
 
     <main>
-        <div class="notificaciones">
-            <h2>Notificaciones</h2>
-            <ul id="lista-notificaciones">
-                <!-- Aquí se cargarán las notificaciones -->
-            </ul>
+       {% block content1 %}
+        <div class="container">
+            <div class="notificaciones">
+                <h2>Notificaciones</h2>
+            </div>
+            {% for notification in notifications %}
+            <ul class="noti-card">     
+                    <li>
+                        <p><strong>{{ notification[0] }}</strong> </p> 
+                        <p> <b>Fecha:</b> {{ notification[1] }} </p> 
+                        <p> <b> Leido </b> 
+                            <input type="checkbox" {% if notification[2] %}
+                                                        checked
+                                                    {% endif %} 
+                            onchange="actualizarStatusNoti({{ notification[3] }}, this.checked)">
+                        </p> 
+                    </li>   
+                </ul>
+                <p></p>
+            {% endfor %}
         </div>
+        {% endblock %}
     </main>
 
-    <script src="js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
