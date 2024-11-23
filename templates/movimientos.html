@@ -20,17 +20,17 @@
         
         <div class="movement-card">
             <div>
+              {% if movement[6] %}
+              <p><b>Dinero Reservado</b></p>
+              {% else %}
                 <p><strong>{{ movement[0] }}</strong></p>
                 <p><b>Fecha:</b> {{ movement[1] }}</p>
                 {% if movement[3] != 0 %}
-                  {% if movement[6] %}
-                    <p><b>Reservado:</b> ${{ movement[3] }}</p>
+                  <p><b>Egresos:</b> ${{ movement[3] }}</p>
                   {% else %}
-                    <p><b>Egresos:</b> ${{ movement[3] }}</p>
-                  {% endif %}
-                {% else %}
                   <p><b>Ingresos:</b> ${{ movement[2] }}</p>
                 {% endif %}
+              {% endif %}
                 <p><b>Tipo de Tarjeta:</b> {{ movement[4] }}</p>
             </div>
             <span class="icon">📄</span>
