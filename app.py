@@ -1,6 +1,6 @@
 from flask import Flask, render_template, send_file, request, redirect, url_for, session
 from functools import wraps
-from scripts.analisisgastos import graficar
+from scripts.analisisgastos import graficar, graficarTotal
 from scripts.login import loginStatus
 from scripts.registro import registrar
 from scripts.modificar import modificarDatos
@@ -126,6 +126,10 @@ def analisis_gastos():
 @app.route("/grafica")
 def graficarRuta():
     return graficar(conn)
+
+@app.route("/graficaMeses")
+def graficarEstado():
+    return graficarTotal(conn)
 
 @app.route("/ahorros")
 @login_required

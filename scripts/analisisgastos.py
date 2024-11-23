@@ -135,3 +135,38 @@ def graficar(conexion):
     img.seek(0)
 
     return send_file(img, mimetype="image/png")
+
+def graficarTotal(conexion):
+
+    ingresos, egresos = obtenerInformacion(conexion)
+    _ , egresosMeses =  agruparEgresos(egresos)
+
+    ingresosTotales = sum(monto for monto, _ in ingresos)
+    egresosTotales = sum(egresosMeses)
+
+    fig, ax = plt.subplots(figsize=(7, 1))
+    sns.set_style("whitegrid") 
+
+    categoria = ["Ingresos", "Egresos"]
+    valores = [ingresosTotales, egresosTotales]
+    colores = ["green", "red"]
+
+    ax.barh(categoria, valores, color = colores)
+
+    ax.set_title("Total del mes")
+
+    ax.grid(False)          
+    ax.set_xticks([])   
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    ax.spines['left'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+
+    canvas = plt.gcf()
+    img = io.BytesIO()
+    canvas.savefig(img, format="png", bbox_inches="tight", transparent=True)
+    img.seek(0)
+
+    return send_file(img, mimetype="image/png")
