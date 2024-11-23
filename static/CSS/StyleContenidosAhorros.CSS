@@ -11,6 +11,9 @@
 
     font-size: 100px;
 }
+#tarjeta{
+    padding-right: 1%;
+}
 .debito-text{
     display: flex;
     font-size: 50px;
