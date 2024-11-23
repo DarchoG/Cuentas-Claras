@@ -1,6 +1,6 @@
 from flask import Flask, render_template, send_file, request, redirect, url_for, session
 from functools import wraps
-from scripts.analisisgastos import graficar
+from scripts.analisisgastos import graficar, graficarTotal
 from scripts.login import loginStatus
 from scripts.registro import registrar
 from scripts.modificar import modificarDatos
@@ -127,6 +127,10 @@ def analisis_gastos():
 def graficarRuta():
     return graficar(conn)
 
+@app.route("/graficaMeses")
+def graficarEstado():
+    return graficarTotal(conn)
+
 @app.route("/ahorros")
 @login_required
 def ahorros():
@@ -136,7 +140,13 @@ def ahorros():
 @login_required
 def actu_reservado():
    return actualizar_dinero_reservado(conn)
-
+    
+@app.route('/cambiar_tarjeta', methods=['POST'])
+def cambiar_tarjeta():
+    nueva_tarjeta = request.form['nueva_tarjeta']
+    session['tipo_tarjeta'] = nueva_tarjeta  
+    return redirect('/ahorros')  
+    
 @app.route("/pagos")
 @login_required
 def pagos():

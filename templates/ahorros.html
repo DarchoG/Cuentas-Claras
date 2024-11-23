@@ -32,7 +32,7 @@
         </a>
     </div>
     
-    <h1> <span id="tarjeta">{% for tarjeta in data.tipo_tarjeta %}{{ tarjeta }}{% endfor %}</span></h1>
+    <h1> <span id="tarjeta">{% for tarjeta in data.tipo_tarjeta %}{{ tarjeta }}{% endfor %}</span><button id = botoncambiar class='btn secondary' onclick='CambiaTarjeta()'>Cambiar</button></div></h1>
  </header>
 
     <nav id="menu" class="hidden">
@@ -138,40 +138,56 @@
     <form name="Forma01" method="POST" action="{{ url_for('actu_reservado') }}" style="display:none;" submit = false>
         <input type="hidden" name="dinero_reservado" id="dinero_reservado">
     </form>
+    <form id="Forma02" method="POST" action="/cambiar_tarjeta">
+        <input type="hidden" name="nueva_tarjeta" id="inputTarjeta" value="">
+      </form>
     <script>
+    ComprobarTarjeta();
+    mostrar();
+    function CambiaTarjeta() {
+        var tarjeta = $('#tarjeta').text().trim(); 
+        var nueva_tarjeta = tarjeta === "Débito" ? "Credito" : "Débito"; 
+        $('#tarjeta').text(nueva_tarjeta); 
+
+       
+        $('#inputTarjeta').val(nueva_tarjeta);
+        $('#Forma02').submit();
+        
+    }
 
     function  ComprobarTarjeta(){
         var tarjeta = $('#tarjeta').text()
         if(tarjeta==="Débito"){
            // setTimeout(function() { $('#ModoCredito').hide(); });
-            $('#ApartadoCredito').remove();
-            $('#graficaC').remove()
-            $('#ModoCredito').remove();
+            $('#ApartadoCredito').hide();
+            $('#graficaC').hide()
+            $('#ModoCredito').hide();
            
         }else if(tarjeta==="Credito"){
             $('#ModoCredito').show();
-            $('#AhorroL').remove();
+            $('#AhorroL').hide();
             $('#ApartadoCredito').show();
-            $('#debito-text').remove();
-            $('#grafica').remove();
-            $('#Gastos').remove();
-            $('#Ingresos').remove();
-            $('#ModoDebito').remove();
-            $('#DR').remove();
-            $('#DD').remove();
+            $('#debito-text').hide();
+            $('#grafica').hide();
+            $('#Gastos').hide();
+            $('#Ingresos').hide();
+            $('#ModoDebito').hide();
+            $('#DR').hide();
+            $('#DD').hide();
         }
         
         
     }
     function mostrar(){
         var dinero_reservado_actual = parseFloat($('#dinero_modificado').val())
+        var tarjeta = $('#tarjeta').text();
         var texto = $('#max_dinero_debito').text();
         // Limpiar el texto para extraer solo el valor numérico
         var dineroMaximo = parseFloat(texto.replace(/[^\d.-]/g, ''));
         // Imprimir el resultado en la consola
         console.log(dineroMaximo);
-        
-        $('#ApartadoCredito').remove();
+        console.log(tarjeta);
+        $('#ApartadoCredito').hide();
     }
     function enviaDatos() {
     // Obtener el valor del dinero modificado desde el campo de entrada
@@ -214,8 +230,7 @@
     }
     }
 
-    ComprobarTarjeta();
-    mostrar();
+    
     </script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
