@@ -136,7 +136,13 @@ def ahorros():
 @login_required
 def actu_reservado():
    return actualizar_dinero_reservado(conn)
-
+    
+@app.route('/cambiar_tarjeta', methods=['POST'])
+def cambiar_tarjeta():
+    nueva_tarjeta = request.form['nueva_tarjeta']
+    session['tipo_tarjeta'] = nueva_tarjeta  
+    return redirect('/ahorros')  
+    
 @app.route("/pagos")
 @login_required
 def pagos():
