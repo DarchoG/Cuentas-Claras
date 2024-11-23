@@ -15,6 +15,7 @@ def loginStatus(conexion):
 
             if usuario:
                 session['user_id'] = usuario[0]
+                session['tarjeta'] = 'Débito' #Tarjeta por defecto
                 return redirect(url_for('index'))
             else:
                 return "Credenciales incorrectas, intenta de nuevo."
