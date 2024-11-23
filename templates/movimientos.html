@@ -11,11 +11,14 @@
   <body>
     {% extends "menu.html" %}
     {% block content1 %}
-    <div class="bottom_movimiento">
-      <a href="{{ url_for('registro_movimiento') }}" class="btn-modificar">Agregar movimiento</a>
-    </div>
     <div class="movimientos"><h2>Movimientos este mes: {{ movements|length }} </h2></div>
     <div class="container">
+      <div class="bottom_movimiento" style="margin-bottom: 20px;">
+      
+
+        <a href="{{ url_for('registro_movimiento') }}" >Agregar movimiento</a>
+      </div>
+      <p></p>
         {% for movement in movements %}
         
         <div class="movement-card">
