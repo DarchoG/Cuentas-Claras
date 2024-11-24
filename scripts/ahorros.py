@@ -50,7 +50,7 @@ def ahorros_info(conexion):
         ax.pie(data_grafica,colors =colores,autopct='%1.1f%%')
         ax.set_facecolor('none')
         
-        plt.savefig(r"app\static\img\credito.png",transparent=True)
+        plt.savefig(r"static\img\credito.png",transparent=True)
         
     elif(tipo_tarjeta=='Débito'):
         colores = [
@@ -67,6 +67,6 @@ def ahorros_info(conexion):
         ax.pie(data_grafica,colors =colores,autopct='%1.1f%%')
         ax.set_facecolor('none')
         
-        plt.savefig(r"app\static\img\grafico.png", transparent=True)
+        plt.savefig(r"static\img\grafico.png", transparent=True)
     return render_template('ahorros.html', data=data)
 

@@ -90,8 +90,8 @@ def registro_movimiento():
     if request.method == "POST":
         descripcion = request.form['descripcion']
         fecha = request.form['fecha']
-        ingresos = request.form['ingresos'] or 0
-        egresos = request.form['egresos'] or 0
+        ingresos = request.form.get('ingresos', 0)
+        egresos = request.form.get('egresos', 0)
         id_tarjeta = request.form['id_tarjeta']
         tipo_tarjeta = request.form[f'tipo_tarjeta_{id_tarjeta}']
         reservado = 'reservado' in request.form
