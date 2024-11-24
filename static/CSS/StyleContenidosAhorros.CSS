@@ -18,6 +18,7 @@
     display: flex;
     font-size: 50px;
     justify-content: center;
+    padding-top: 1%;
 }
 .Contenedor-hijo {
     display: flex;
@@ -41,7 +42,7 @@
     align-items: center;
 }
 .dinero {
-    width: 100%;
+    width: 110%;
     font-size: 100px;
     background-color: transparent;
     text-align: center;
@@ -93,12 +94,7 @@
     justify-content: center; 
     width: 500px;
 }
-#graficaC {
-    margin-top: -25%;
-    object-fit: contain;
-    justify-content: center; 
-    width: 500px;
-}
+
 .grafica_leyenda {
     display: flex;
     justify-content: center; /* Centrado horizontal */
@@ -195,6 +191,7 @@ div#DR::before {
 .EstadoActual{
     display: flex;
     align-content: center;
+    width: 100%;
 }
 .void{
     opacity: 0;
@@ -234,6 +231,8 @@ div#DR::before {
     display: flex;
     align-content: center;
     flex-wrap: wrap;
+    padding-left: 1%;
+    width: 500px;
 }
 #CDHA{
 
@@ -246,4 +245,33 @@ div#DR::before {
 }
 .mensajeError{
     text-align: center;
+}
+.expansion{
+    width: auto;
+    transition: width 0.3s ease;
+}
+.contenedor-imagen{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#grafica {
+    max-width: 120%;
+    max-height: 120%;
+    object-fit: contain; /* O cambia a cover según lo necesario */
+    padding-top: 3%;
+}
+.contenedor-imagenC{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1%;
+}
+#graficaC {
+    max-width: 120%;
+    max-height: 120%;
+    object-fit: contain; /* O cambia a cover según lo necesario */
+    margin-top: -22%
 }
