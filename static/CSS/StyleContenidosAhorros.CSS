@@ -244,3 +244,6 @@ div#DR::before {
 #Cabecera{
     padding-left: 1%;
 }
+.mensajeError{
+    text-align: center;
+}
