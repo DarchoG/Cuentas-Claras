@@ -131,11 +131,7 @@
                 </div>
             </div>
         </div>
-        <div class="limite_ahorro" id="ApartadoCredito">
-            <div class="maximo" >
-                <div><img  width="200px" height="200px" id="limite" src="{{ url_for('static', filename='img/limite.png') }}" alt="Gráfico"></div>
-                <div id="LMT">Limite de gasto: </div>
-            </div>
+
         
     </div>
     
@@ -168,7 +164,7 @@
             $('#ModoCredito').hide();
             $('#GastosCredito').hide();
             $('#LC').hide();
-        }else if(tarjeta==="Credito"){
+        }else if(tarjeta==="Credito"||tarjeta==="Crédito"){
             $('#ModoCredito').show();
             $('#AhorroL').hide();
             $('#ApartadoCredito').show();
