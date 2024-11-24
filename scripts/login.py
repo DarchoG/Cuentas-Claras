@@ -19,7 +19,7 @@ def loginStatus(conexion):
                 session['correo'] = correo
                 return redirect(url_for('index'))
             else:
-                return "Credenciales incorrectas, intenta de nuevo."
+                return redirect(url_for('error'))
 
         except Exception as e:
             print("Error al iniciar sesión:", e)

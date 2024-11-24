@@ -41,6 +41,10 @@ def login_required(f):
 def login():
     return render_template('login.html')
 
+@app.route("/error")
+def error():
+    return render_template('error.html')
+
 @app.route("/login", methods=["GET", "POST"])  
 def login_post():
     return loginStatus(conn)
