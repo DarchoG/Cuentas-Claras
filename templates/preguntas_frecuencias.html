@@ -10,30 +10,9 @@
 </head>
 <body>
     
-   <!-- Cabecera -->
-   <header class="header">
-    <!-- Menu hamburguesa -->
-    <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
-        &#9776; 
-    </button>
-    <div class="centro">
-        <a href="./index.html" class="sin-subrayado">
-            <h1>SelfBank</h1>
-        </a>
-    </div>
- </header>
-
-<nav id="menu" class="hidden">
-    <ul>
-        <li><a href="/templates/notificaciones.html"><span class="material-symbols-outlined">notifications</span><br>Notificaciones</a></li>
-        <li><a href="/templates/movimientos.html"><span class="material-symbols-outlined">currency_exchange</span><br>Movimientos</a></li>
-        <li><a href="/templates/analisisgastos.html"><span class="material-symbols-outlined">search_insights</span><br>Analisis Gastos</a></li>
-        <li><a href="/templates/ahorros.html"><span class="material-symbols-outlined">savings</span><br>Ahorros</a></li>
-        <li><a href="/templates/pagos.html"><span class="material-symbols-outlined">payments</span><br>Pagar</a></li>
-    </ul>
-</nav>
-
-<main></main>
+    {% extends "menu.html" %}
+    {% block content1 %}
+<main>  </main>
 
 <!-- Botones FAQs -->
 
@@ -72,6 +51,10 @@
         </div>
     </div>
 </div>
+    
+    {% endblock %}
+    
+    
 
 <script src="/static/js/script.js"></script>
 <script>

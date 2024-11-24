@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Tarjeta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styleregistro.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+</head>
+<body>
+    {% extends "menu.html" %}
+    {% block content1 %}
+    <div class="movimientos"><h2>Agregar Tarjeta</h2></div>
+    <div class="container">
+        <form action="{{ url_for('agregar_tarjeta') }}" method="POST">
+            <div class="form-group">
+                <label for="nombre_usuario">Nombre de la Tarjeta:</label>
+                <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo_tarjeta">Tipo de Tarjeta:</label>
+                <div class="tarjetas-container">
+                    <div class="tarjeta-card">
+                        <input type="radio" id="debito" name="tipo_tarjeta" value="Débito" required>
+                        <label for="debito">Débito</label>
+                    </div>
+                    <div class="tarjeta-card">
+                        <input type="radio" id="credito" name="tipo_tarjeta" value="Credito" required>
+                        <label for="credito">Crédito</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="numero_tarjeta">Número de la Tarjeta:</label>
+                <input type="text" id="numero_tarjeta" name="numero_tarjeta" required>
+            </div>
+            <button type="submit" class="registrar-btn">Agregar Tarjeta</button>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

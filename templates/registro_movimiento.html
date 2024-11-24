@@ -38,6 +38,7 @@
                             <input type="radio" id="tarjeta_{{ card[0] }}" name="id_tarjeta" value="{{ card[0] }}" required>
                             <label for="tarjeta_{{ card[0] }}">
                                 <p><strong>{{ card[1] }}</strong></p>
+                                <p>Nombre: {{ card[4] }}</p>
                                 <p>Número: {{ card[3] }}</p>
                                 <p>Saldo: ${{ card[2] }}</p>
                                 <input type="hidden" name="tipo_tarjeta_{{ card[0] }}" value="{{ card[1] }}">
