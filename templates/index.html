@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina principal</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" /> 
 </head>
 <body>
@@ -15,18 +15,39 @@
     {% block content1 %}
 
         <main>
-            <div class="ventanas">
-                <div class="ventana" id="debitos">
-                    <h2>Tarjetas de debito</h2>
-                    <ul id="lista-debitos"></ul>
-                </div>
+            <div class="movimientos"><h2>Tarjetas de debito</h2></div>
+            <div class="container">
+                
+                    {% for card in debit_cards %}
+                    <div class="movement-card">
+                            <div>
+                                <p><strong>Nombre:</strong> {{ card[1] }}</p>
+                                <p><b>Número:</b> {{ card[4] }}</p>
+                                <p><b>Saldo:</b> ${{ card[3] }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                
+            </div>
         
-                <div class="ventana" id="creditos">
-                    <h2>Tarjetas de credito</h2>
-                    <ul id="lista-creditos"></ul>
-                </div>
+            <div class="movimientos"><h2>Tarjetas de credito</h2></div>
+            <div class="container">
+                
+                {% for card in credit_cards %}
+                <div class="movement-card">
+                        <div>
+                            <p><strong>Nombre:</strong> {{ card[1] }}</p>
+                            <p><b>Número:</b> {{ card[4] }}</p>
+                            <p><b>Saldo:</b> ${{ card[3] }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            
+        </div>
             </div>    
         </main>
+
+       
 
     {% endblock %}
 

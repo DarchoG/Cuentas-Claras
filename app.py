@@ -50,7 +50,26 @@ def registro():
 @app.route("/index")
 @login_required
 def index():
-    return render_template('index.html')
+    user_id = session['user_id']
+    
+    # Fetch user's debit cards
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT id_tarjeta, nombre_usuario, tipo_tarjeta, dinero_disponible, numero_tarjeta, dinero_reservado
+        FROM tarjetas
+        WHERE id_usuario = %s AND tipo_tarjeta = 'Débito'
+    """, (user_id,))
+    debit_cards = cur.fetchall()
+    
+    # Fetch user's credit cards
+    cur.execute("""
+        SELECT id_tarjeta, nombre_usuario, tipo_tarjeta, dinero_disponible, numero_tarjeta, dinero_reservado
+        FROM tarjetas
+        WHERE id_usuario = %s AND tipo_tarjeta = 'Credito'
+    """, (user_id,))
+    credit_cards = cur.fetchall()
+    cur.close()
+    return render_template('index.html', debit_cards=debit_cards, credit_cards=credit_cards)
 
 @app.route("/notificaciones")
 @login_required
