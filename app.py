@@ -1,12 +1,12 @@
 from flask import Flask, render_template, send_file, request, redirect, url_for, session
 from functools import wraps
-from scripts.analisisgastos import graficar, graficarTotal
+from scripts.analisisgastos import graficar, graficarTotal, graficarStatus
 from scripts.login import loginStatus
 from scripts.registro import registrar
 from scripts.modificar import modificarDatos
 from scripts.perfil import obtenerPerfil
-from scripts.ahorros import ahorros_info                             #Para apartado ahorro
-from scripts.actualizar_reservado import actualizar_dinero_reservado #Para apartado ahorro
+from scripts.ahorros import ahorros_info                             
+from scripts.actualizar_reservado import actualizar_dinero_reservado
 
 import psycopg2
 
@@ -123,13 +123,17 @@ def registro_movimiento():
 def analisis_gastos():
     return render_template("analisisgastos.html")
 
-@app.route("/grafica")
+@app.route("/graficar")
 def graficarRuta():
     return graficar(conn)
 
-@app.route("/graficaMeses")
-def graficarEstado():
+@app.route("/graficarMeses")
+def graficarMes():
     return graficarTotal(conn)
+
+@app.route("/graficarStatus")
+def graficarEstado():
+    return graficarStatus(conn)
 
 @app.route("/ahorros")
 @login_required
