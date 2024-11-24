@@ -74,7 +74,7 @@
                 <div><input min = 0 max ="{% for dinero in data.dinero_reservado %}{{ dinero }}{% endfor %}" type='number' id='dinero_modificado' class='dinero' value="{% for dinero in data.dinero_reservado %}{{ dinero }}{% endfor %}" step='0.01' "></div>
             </div>
 
-            <div id=ahorro>Ahorro Total</div>
+            <div id=ahorro>Dinero reservado</div>
             
             <div id="BotonEnviar"><button id = botonModificar class='btn secondary' onclick='enviaDatos()'>Modificar</button></div>
             
@@ -101,9 +101,8 @@
                     <div class = "void">sds</div>
                     <div class = "void">sds</div>
                     <div class = "void">sds</div>
-                    <div class = "void">sds</div>
-                    <div class = "void">sds</div>
-                    <div class = "void">sds</div>
+
+                    
                     
                     <div>
                         <div id="titulo_leyenda">Estado actual</div>
@@ -117,17 +116,13 @@
                         <div class="leyenda" id="LC">Limite de credito</div>
                         <div class="leyenda" id="GastosCredito">Gastos</div>
                     </div>
-                    <div><img class="leyenda"  id = "grafica" src="{{ url_for('static', filename='img/grafico.png') }}" alt="Gráfico"></div>
-                    <div><img class="leyenda"  id = "graficaC" src="{{ url_for('static', filename='img/credito.png') }}" alt="Gráfico"></div>
+                    <div class="contenedor-imagen"><img class="leyenda"  id = "grafica" src="{{ url_for('static', filename='img/grafico.png') }}" alt="Gráfico"></div>
+                    <div class="contenedor-imagenC"><img class="leyenda"  id = "graficaC" src="{{ url_for('static', filename='img/credito.png') }}" alt="Gráfico"></div>
                 </div>
             </div>
             <div id="debito-text" class="debito-text">
                 <div class="TSymbol"><img id="CDHA" src="{{ url_for('static', filename='img/CDAH.png') }}" alt="TSymbol"></div>
-                <div id="max_dinero_debito">
-                    Dinero disponible en la tarjeta: $
-                    {% for dinero in data.dinero_disponible %}
-                        {{ dinero }}
-                    {% endfor %}
+                <div id="max_dinero_debito">Disponible: ${% for dinero in data.dinero_disponible %}{{ dinero }}{% endfor %}
                 </div>
             </div>
         </div>
