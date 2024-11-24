@@ -1,6 +1,9 @@
 from flask import Flask, render_template, send_file, redirect,url_for, session, request
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.lib.pagesizes import letter
+from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import seaborn as sns
@@ -221,3 +224,119 @@ def graficarStatus(conexion):
     img.seek(0)
 
     return send_file(img, mimetype="image/png")
+
+def obtenerDatosPDF(conexion):
+
+    cursor = conexion.cursor()
+    cursor.execute('SELECT nombre_usuario, correo FROM usuarios WHERE id_usuario = %s;', (session.get('user_id'),))
+    usuario = cursor.fetchall()
+    cursor.execute('SELECT tipo_tarjeta, numero_tarjeta, dinero_disponible FROM tarjetas WHERE id_usuario = %s AND status;', (session.get('user_id'),))
+    tarjetas = cursor.fetchall()
+    cursor.execute('SELECT ingresos, descripcion_movimiento, fecha FROM movimientos WHERE id_usuario = %s AND ingresos != 0;', (session.get('user_id'),))
+    ingresos = cursor.fetchall()
+    cursor.execute('SELECT egresos, descripcion_movimiento, fecha FROM movimientos WHERE id_usuario = %s AND egresos != 0;', (session.get('user_id'),))
+    egresos = cursor.fetchall()
+    cursor.close()
+
+    return usuario, tarjetas, ingresos, egresos
+
+def organizarMovimientos(ingresos, egresos):
+
+    movimientos = []
+
+    for monto, movimiento, fecha in ingresos:
+
+        movimientos.append([fecha, movimiento, monto])
+    
+    for monto, movimiento, fecha in egresos:
+
+        movimientos.append([fecha, movimiento, monto * -1])
+
+    ordenarMovimientos = sorted(movimientos, key=lambda x: x[0])
+
+    return ordenarMovimientos
+
+def generarPDF(conexion):
+
+    fecha = datetime.now()
+    resultado = f"_{fecha.year}_{fecha.month:02d}_{fecha.day:02d}_{fecha.hour:02d}_{fecha.minute:02d}_{fecha.second:02d}"
+    filename = (f"Estado_Cuenta{resultado}.pdf")
+
+    doc = SimpleDocTemplate(
+        filename, 
+        pagesize=letter,
+        leftMargin=30,  
+        rightMargin=30, 
+        topMargin=40,    
+        bottomMargin=40 
+    )
+
+    elements = []
+
+    # --- Usuarios ---
+
+    usuario, tarjetas, ingresos, egresos = obtenerDatosPDF(conexion)
+    movimientos = organizarMovimientos(ingresos, egresos)
+
+    nombreUsuario, correoUsuario = usuario[0]
+
+    usuarioData = [
+        ['Nombre', nombreUsuario],
+        ['Correo', correoUsuario],
+    ]
+
+    usuarioTable = Table(usuarioData)
+
+    # ---- Tarjetas ----
+
+    tarjetasData = [
+        ['Tarjeta', 'Tipo', 'Saldo Disponible'],
+    ]
+    
+    for tipo, numero, saldo in tarjetas:
+
+        numero = numero[:-4]
+
+        tarjetasData.append([numero, tipo, f"${saldo:.2f}"])
+
+    tarjetasTable = Table(tarjetasData)
+
+    usuarioTarjetas = Table([[usuarioTable, tarjetasTable]], colWidths=[300, 300]) 
+
+    # --- Movimientos ---
+
+    dataMovimientos= [['Fecha', 'Descripción', 'Monto']]
+
+    for movimiento in movimientos:
+
+        fecha = movimiento[0].strftime("%Y-%m-%d")
+        descripcion = movimiento[1]
+
+        if(movimiento[2] >= 0):   
+            monto = f"${abs(movimiento[2]):,.2f}"
+        else:
+            monto = f"-${abs(movimiento[2]):,.2f}"
+
+        dataMovimientos.append([fecha, descripcion, monto])
+
+    table = Table(dataMovimientos)
+
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), (0.5, 0.5, 0.5)),
+        ('TEXTCOLOR', (0, 0), (-1, 0), (1, 1, 1)),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Centrado para las otras columnas
+        ('ALIGN', (2, 1), (-1, -1), 'LEFT'),  # Alineación a la izquierda solo para la columna 'Monto'
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), (1, 1, 1)),
+        ('GRID', (0, 0), (-1, -1), 1, (0, 0, 0))
+    ])
+
+    table.setStyle(style)
+
+    elements.append(usuarioTarjetas)
+    elements.append(table)
+
+    # Generar el PDF
+    doc.build(elements)
+    print(f"PDF generado: {filename}")
