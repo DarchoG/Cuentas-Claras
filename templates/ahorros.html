@@ -78,8 +78,8 @@
             
             <div id="BotonEnviar"><button id = botonModificar class='btn secondary' onclick='enviaDatos()'>Modificar</button></div>
             
-            <div id="mensaje"  style="color: red; display: none; ">No se pueden ingresar numeros negativos</div>
-            <div id="mensaje2" style="color: red; display: none;">No hay suficiente dinero.</div>
+            <div id="mensaje" class="mensajeError" style="color: red; display: none; ">No se pueden ingresar numeros negativos</div>
+            <div id="mensaje2" class="mensajeError" style="color: red; display: none;">No hay suficiente dinero.</div>
             <!--  Modo tarjetas de credito -->
 
             
@@ -214,8 +214,8 @@
 
             // Validar si la cantidad es válida
             if (isNaN(cantidad) || cantidad < 0) {
-                $('#mensaje2').html('Por favor, ingrese un número válido.').show();
-                $('#botonModificar').prop('disabled', true);
+                $('#mensaje2').html('Por favor, ingrese un número válido mayor o igual a cero').show();
+                $('#botonModificar').hide();
             } 
             // Validar que no exceda el dinero disponible + reservado (solo para Débito)
             else if (tarjeta === "Débito" && cantidad > totalDisponible && cantidad > maximo) {
