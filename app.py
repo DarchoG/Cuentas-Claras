@@ -9,6 +9,8 @@ from scripts.ahorros import ahorros_info
 from scripts.actualizar_reservado import actualizar_dinero_reservado
 
 import psycopg2
+import random
+import time
 
 app = Flask(__name__)
 
@@ -39,6 +41,10 @@ def login_required(f):
 def login():
     return render_template('login.html')
 
+@app.route("/error")
+def error():
+    return render_template('error.html')
+
 @app.route("/login", methods=["GET", "POST"])  
 def login_post():
     return loginStatus(conn)
@@ -50,7 +56,28 @@ def registro():
 @app.route("/index")
 @login_required
 def index():
-    return render_template('index.html')
+    user_id = session['user_id']
+    
+    # Fetch user's debit cards
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT id_tarjeta, nombre_usuario, tipo_tarjeta, dinero_disponible, numero_tarjeta, dinero_reservado, status
+        FROM tarjetas
+        WHERE id_usuario = %s AND tipo_tarjeta = 'Débito'
+        ORDER BY id_tarjeta
+    """, (user_id,))
+    debit_cards = cur.fetchall()
+    
+    # Fetch user's credit cards
+    cur.execute("""
+        SELECT id_tarjeta, nombre_usuario, tipo_tarjeta, dinero_disponible, numero_tarjeta, dinero_reservado, status
+        FROM tarjetas
+        WHERE id_usuario = %s AND tipo_tarjeta = 'Credito'
+        ORDER BY id_tarjeta
+    """, (user_id,))
+    credit_cards = cur.fetchall()
+    cur.close()
+    return render_template('index.html', debit_cards=debit_cards, credit_cards=credit_cards)
 
 @app.route("/notificaciones")
 @login_required
@@ -109,7 +136,7 @@ def registro_movimiento():
     # Obtener tarjetas
     cur = conn.cursor()
     cur.execute("""
-        SELECT id_tarjeta, tipo_tarjeta, dinero_disponible, numero_tarjeta
+        SELECT id_tarjeta, tipo_tarjeta, dinero_disponible, numero_tarjeta, nombre_usuario
         FROM tarjetas
         WHERE id_usuario = %s
     """, (user_id,))
@@ -194,6 +221,81 @@ def actualizar_status_noti():
     cur.close()
     
     return '', 204  # En caso que no haya contenido
+
+@app.route("/faq")
+@login_required
+def faq():
+    return render_template("preguntas_frecuencias.html")
+
+@app.route("/borrar_tarjeta/<int:card_id>", methods=["POST"])
+@login_required
+def borrar_tarjeta(card_id):
+    user_id = session['user_id']
+    cur = conn.cursor()
+    cur.execute("""
+        UPDATE tarjetas
+        SET status = FALSE
+        WHERE id_tarjeta = %s AND id_usuario = %s
+    """, (card_id, user_id))
+    conn.commit()
+    cur.close()
+    return redirect(url_for('index'))
+
+
+
+@app.route("/agregar_tarjeta", methods=["GET", "POST"])
+@login_required
+def agregar_tarjeta():
+    user_id = session['user_id']
+    if request.method == "POST":
+        nombre_usuario = request.form['nombre_usuario']
+        tipo_tarjeta = request.form['tipo_tarjeta']
+        numero_tarjeta = request.form['numero_tarjeta']
+        
+        # Generate a random 4-digit PIN using the current time as the seed
+        random.seed(time.time())
+        pin = random.randint(1000, 9999)
+        
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO tarjetas (id_usuario, nombre_usuario, tipo_tarjeta, numero_tarjeta, dinero_disponible, status, pin, dinero_reservado)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (user_id, nombre_usuario, tipo_tarjeta, numero_tarjeta, 0, True, pin, 0))
+        conn.commit()
+        cur.close()
+        
+        return redirect(url_for('index'))
+    
+    return render_template("agregar_tarjeta.html")
+
+@app.route("/editar_tarjeta/<int:card_id>", methods=["GET", "POST"])
+@login_required
+def editar_tarjeta(card_id):
+    user_id = session['user_id']
+    if request.method == "POST":
+        nombre_usuario = request.form['nombre_usuario']
+        tipo_tarjeta = request.form['tipo_tarjeta']
+        numero_tarjeta = request.form['numero_tarjeta']
+        cur = conn.cursor()
+        cur.execute("""
+            UPDATE tarjetas
+            SET nombre_usuario = %s, tipo_tarjeta = %s, numero_tarjeta = %s
+            WHERE id_tarjeta = %s AND id_usuario = %s
+        """, (nombre_usuario, tipo_tarjeta, numero_tarjeta, card_id, user_id))
+        conn.commit()
+        cur.close()
+        return redirect(url_for('index'))
+
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT id_tarjeta, nombre_usuario, tipo_tarjeta, numero_tarjeta
+        FROM tarjetas
+        WHERE id_tarjeta = %s AND id_usuario = %s
+    """, (card_id, user_id))
+    card = cur.fetchone()
+    cur.close()
+    return render_template("editar_tarjeta.html", card=card)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

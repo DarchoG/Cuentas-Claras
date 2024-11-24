@@ -94,3 +94,18 @@ function toggleIngresos(egresosInput) {
         }
     });
 }
+
+// Función para alternar la visibilidad del contenedor de información
+function toggleInfo(id) {
+    var infoContainer = document.getElementById(id);
+    if (infoContainer.classList.contains('open')) {
+        infoContainer.classList.remove('open');
+    } else {
+        infoContainer.classList.add('open');
+    }
+}
+
+
+
+
+

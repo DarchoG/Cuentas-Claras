@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina principal</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/normalize.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" /> 
 </head>
 <body>
@@ -15,16 +15,79 @@
     {% block content1 %}
 
         <main>
-            <div class="ventanas">
-                <div class="ventana" id="debitos">
-                    <h2>Tarjetas de debito</h2>
-                    <ul id="lista-debitos"></ul>
-                </div>
+            <div class="movimientos"><h2>Tarjetas de debito</h2></div>
+            <div class="container">
+                
+                    {% for card in debit_cards %}
+                    {% if card[6] %}
+                    <div class="movement-card">
+                            <div>
+                                <p><strong>Nombre:</strong> {{ card[1] }}</p>
+                                <p><b>Número:</b> {{ card[4] }}</p>
+                                <p><b>Saldo:</b> ${{ card[3] }}</p>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <form action="{{ url_for('borrar_tarjeta', card_id=card[0]) }}" method="POST" style="text-align: right;">
+                                <button type="submit" style="background:none;border:none;color:red;font-size:32px;">&times;</button>
+                            </form>
+                            <form action="{{ url_for('editar_tarjeta', card_id=card[0]) }}" method="GET" style="text-align: right;">
+                                <button type="submit" style="background:none;border:none;color:blue;font-size:32px;">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                
+            </div>
         
-                <div class="ventana" id="creditos">
-                    <h2>Tarjetas de credito</h2>
-                    <ul id="lista-creditos"></ul>
-                </div>
+            <div class="movimientos"><h2>Tarjetas de credito</h2></div>
+            <div class="container">
+                
+                {% for card in credit_cards %}
+                    {% if card[6] %}
+                    <div class="movement-card">
+                            <div>
+                                <p><strong>Nombre:</strong> {{ card[1] }}</p>
+                                <p><b>Número:</b> {{ card[4] }}</p>
+                                <p><b>Saldo:</b> ${{ card[3] }}</p>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <form action="{{ url_for('borrar_tarjeta', card_id=card[0]) }}" method="POST" style="text-align: right;">
+                                <button type="submit" style="background:none;border:none;color:red;font-size:32px;">&times;</button>
+                            </form>
+                            <form action="{{ url_for('editar_tarjeta', card_id=card[0]) }}" method="GET" style="text-align: right;">
+                                <button type="submit" style="background:none;border:none;color:blue;font-size:32px;">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+            
+        </div>
             </div>    
         </main>
 
@@ -34,16 +97,19 @@
 
         <div class="botones-container">
             <div class="botones">
-                <button class="boton">
+                <a href="{{ url_for('agregar_tarjeta') }}"><button class="boton">
                     <span class="material-symbols-outlined">add_card</span>
                     <br>
                     Agregar Tarjetas
                 </button>
+                </a>
+                <a href="{{ url_for('faq') }}">
                 <button class="boton">
                     <span class="material-symbols-outlined">question_answer</span>
                 <br>
                     Preguntas Frecuentes
                 </button>
+                </a>
                 <a href="{{ url_for('logout') }}">
                 <button class="boton">
                     <span class="material-symbols-outlined">logout</span>
