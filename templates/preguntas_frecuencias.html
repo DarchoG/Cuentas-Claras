@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs</title>
+    <link rel="stylesheet" href="/static/CSS/style_faq.css">
+    <link rel="stylesheet" href="/static/CSS/normalize.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+    
+   <!-- Cabecera -->
+   <header class="header">
+    <!-- Menu hamburguesa -->
+    <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
+        &#9776; 
+    </button>
+    <div class="centro">
+        <a href="./index.html" class="sin-subrayado">
+            <h1>SelfBank</h1>
+        </a>
+    </div>
+ </header>
+
+<nav id="menu" class="hidden">
+    <ul>
+        <li><a href="/templates/notificaciones.html"><span class="material-symbols-outlined">notifications</span><br>Notificaciones</a></li>
+        <li><a href="/templates/movimientos.html"><span class="material-symbols-outlined">currency_exchange</span><br>Movimientos</a></li>
+        <li><a href="/templates/analisisgastos.html"><span class="material-symbols-outlined">search_insights</span><br>Analisis Gastos</a></li>
+        <li><a href="/templates/ahorros.html"><span class="material-symbols-outlined">savings</span><br>Ahorros</a></li>
+        <li><a href="/templates/pagos.html"><span class="material-symbols-outlined">payments</span><br>Pagar</a></li>
+    </ul>
+</nav>
+
+<main></main>
+
+<!-- Botones FAQs -->
+
+<div class="botones-container">
+    <div class="botones">
+        
+
+        <button class="boton" onclick="toggleInfo('editar-movimientos-info')">
+            ¿Cómo puedo editar o eliminar mis ingresos y egresos?                <span class="material-symbols-outlined">arrow_drop_down</span>
+        </button>
+        <div id="editar-movimientos-info" class="info-container">
+            <p>En movimientos ....</p>
+        </div>
+
+        <button class="boton" onclick="toggleInfo('funcionamiento-analisis-info')">
+            ¿Como funcionan los análisis de mis finanzas?<span class="material-symbols-outlined">arrow_drop_down</span>
+        </button>
+        <div id="funcionamiento-analisis-info" class="info-container">
+            <p>El analisis es realizado tomando en cuenta...</p>
+        </div>
+
+        
+        <button class="boton" onclick="toggleInfo('lapso-reporte-info')">
+            ¿El reporte de mi analisis de gastos se genera semanal, quincenal, mensual o anuelmente? <span class="material-symbols-outlined">arrow_drop_down</span>
+        </button>
+        <div id="lapso-reporte-info" class="info-container">
+            <p>El analisis de gastos lo podras descargar actualizado mensualmente</p>
+        </div>
+
+        
+        <button class="boton" onclick="toggleInfo('alertas-info')">
+            ¿Hay alguna manera de recibir alertas o notificaciones sobre mi control de gastos?<span class="material-symbols-outlined">arrow_drop_down</span>
+        </button>
+        <div id="alertas-info" class="info-container">
+            <p>Sí, el sistema genera automaticamente una alerta que se recibe a manera de notificación cuando se detecta un movimiento que podría alterar la economía del usuario</p>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/script.js"></script>
+<script>
+    // Función para alternar la visibilidad del contenedor de información
+    function toggleInfo(id) {
+        var infoContainer = document.getElementById(id);
+        // Si el contenedor está visible, lo ocultamos
+        if (infoContainer.classList.contains('open')) {
+            infoContainer.classList.remove('open');
+        } else {
+            // Si está oculto, lo mostramos
+            infoContainer.classList.add('open');
+        }
+    }
+</script>
+
+</body>
+</html>

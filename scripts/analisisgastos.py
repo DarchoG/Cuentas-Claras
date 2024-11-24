@@ -1,9 +1,10 @@
 from flask import Flask, render_template, send_file, redirect,url_for, session, request
-from flask import send_file
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-import io
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 import seaborn as sns
+import io
 
 def obtenerInformacion(conexion):
     
@@ -95,47 +96,6 @@ def obtenerMeses(tupla):
 
     return auxiliar
 
-def graficar(conexion):
-
-    ingresos, egresos = obtenerInformacion(conexion)
-    meses = obtenerMeses(ingresos)
-
-    ingresosMeses = agruparIngresos(ingresos)
-    reservadoMeses, egresosMeses =  agruparEgresos(egresos)
-
-    print("Ingresos: ", ingresosMeses)
-    print("Reservado: ", reservadoMeses)
-    print("Egresos:", egresosMeses)
-    print("Meses:", meses)
-        
-    fig, ax = plt.subplots(figsize=(4, 7))
-    sns.set_style("whitegrid") 
-
-    x = range(len(meses))
-
-    ax.bar(x, ingresosMeses, label="Ingresos", color="green")
-    ax.bar(x, reservadoMeses, bottom=ingresosMeses, label="Reservado", color="orange")
-    ax.bar(x, egresosMeses, bottom=[i + r for i, r in zip(ingresosMeses, reservadoMeses)], 
-           label="Egresos", color="red")
-
-    ax.set_xticks(x)
-    ax.set_xticklabels(meses, rotation=45)
-    ax.set_title("Gráfica de Gastos en Función de Ingresos")
-    ax.legend()
-
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-
-    ax.spines['left'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
-
-    canvas = plt.gcf()
-    img = io.BytesIO()
-    canvas.savefig(img, format="png", bbox_inches="tight", transparent=True)
-    img.seek(0)
-
-    return send_file(img, mimetype="image/png")
-
 def graficarTotal(conexion):
 
     ingresos, egresos = obtenerInformacion(conexion)
@@ -164,9 +124,100 @@ def graficarTotal(conexion):
     ax.spines['left'].set_visible(False)
     ax.spines['bottom'].set_visible(False)
 
-    canvas = plt.gcf()
     img = io.BytesIO()
-    canvas.savefig(img, format="png", bbox_inches="tight", transparent=True)
+    fig.savefig(img, format="png", bbox_inches="tight", transparent=True)
+    img.seek(0)
+
+    return send_file(img, mimetype="image/png")
+
+def graficar(conexion):
+
+    ingresos, egresos = obtenerInformacion(conexion)
+    meses = obtenerMeses(ingresos)
+
+    ingresosMeses = agruparIngresos(ingresos)
+    reservadoMeses, egresosMeses =  agruparEgresos(egresos)
+
+    print("Ingresos: ", ingresosMeses)
+    print("Reservado: ", reservadoMeses)
+    print("Egresos:", egresosMeses)
+    print("Meses:", meses)
+        
+    fig, ax = plt.subplots(figsize=(3.5, 6))
+    sns.set_style("whitegrid") 
+
+    x = range(len(meses))
+
+    ax.bar(x, ingresosMeses, label="Ingresos", color="green")
+    ax.bar(x, reservadoMeses, bottom=ingresosMeses, label="Reservado", color="orange")
+    ax.bar(x, egresosMeses, bottom=[i + r for i, r in zip(ingresosMeses, reservadoMeses)], 
+           label="Egresos", color="red")
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(meses, rotation=45)
+    ax.set_title("Gráfica de Gastos en Función de Ingresos")
+    ax.legend()
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    ax.spines['left'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+
+    img = io.BytesIO()
+    fig.savefig(img, format="png", bbox_inches="tight", transparent=True)
+    img.seek(0)
+
+    return send_file(img, mimetype="image/png")
+
+def graficarStatus(conexion):
+
+    ingresos, egresos = obtenerInformacion(conexion)
+    _ , egresosMeses =  agruparEgresos(egresos)
+
+    ingresosTotales = sum(monto for monto, _ in ingresos)
+    egresosTotales = sum(egresosMeses)
+
+    montoTotal = ingresosTotales + egresosTotales
+    porcentajeIngresos = egresosTotales / montoTotal
+
+    segmentos = [0.2, 0.2, 0.2, 0.2, 0.2]
+    colores = ['#6fbf44', '#efb025', '#f08036', '#ef4b3f', '#ce2335']
+    imagenes = ['static/img/Emoji1.png', 'static/img/Emoji2.png', 'static/img/Emoji3.png', 'static/img/Emoji4.png', 'static/img/Emoji5.png']
+    flecha = 'static/img/Flecha.png'
+
+    posiciones = []
+    acumulador = 0
+
+    for segmento in segmentos:
+
+        posiciones.append(acumulador)
+        acumulador += segmento
+
+    fig, ax = plt.subplots(figsize=(8, 2))
+
+    for i, (inicio, ancho, color) in enumerate(zip(posiciones, segmentos, colores)):
+        ax.barh(y=0, width=ancho, left=inicio, color=color, height=1)
+
+        img = mpimg.imread(imagenes[i])
+        image_box = OffsetImage(img, zoom=0.4)  # Ajusta el tamaño con zoom
+        ab = AnnotationBbox(image_box, (inicio + ancho / 2, 2), frameon=False, box_alignment=(0.5, 0.5))
+        ax.add_artist(ab)
+        
+    img_flecha = mpimg.imread(flecha)
+    image_box_flecha = OffsetImage(img_flecha, zoom=0.05)  # Ajusta el tamaño de la flecha
+
+    ab_flecha = AnnotationBbox(image_box_flecha, (porcentajeIngresos, -2), frameon=False, box_alignment=(0.5, 0.5))
+    ax.add_artist(ab_flecha)
+
+    ax.set_xlim(0, 1)
+    ax.set_ylim(-3.5, 3.5)
+    ax.set_yticks([])
+    ax.set_xticks([])
+    ax.axis('off')
+
+    img = io.BytesIO()
+    fig.savefig(img, format="png", bbox_inches="tight", transparent=True)
     img.seek(0)
 
     return send_file(img, mimetype="image/png")
