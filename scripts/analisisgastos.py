@@ -1,13 +1,14 @@
 from flask import Flask, render_template, send_file, redirect,url_for, session, request
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer
 from reportlab.lib.pagesizes import letter
 from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import seaborn as sns
 import io
+import os
 
 def obtenerInformacion(conexion):
     
@@ -265,15 +266,15 @@ def generarPDF(conexion):
     doc = SimpleDocTemplate(
         filename, 
         pagesize=letter,
-        leftMargin=30,  
-        rightMargin=30, 
-        topMargin=40,    
-        bottomMargin=40 
+        leftMargin=72,  
+        rightMargin=72, 
+        topMargin=72,    
+        bottomMargin=72 
     )
 
     elements = []
 
-    # --- Usuarios ---
+    # --- Usuarios --- #
 
     usuario, tarjetas, ingresos, egresos = obtenerDatosPDF(conexion)
     movimientos = organizarMovimientos(ingresos, egresos)
@@ -287,7 +288,14 @@ def generarPDF(conexion):
 
     usuarioTable = Table(usuarioData)
 
-    # ---- Tarjetas ----
+    style = TableStyle([
+        ('FONTNAME', (0, 0), (-1, -1), 'Times-Roman'), 
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'), 
+        ])
+
+    usuarioTable.setStyle(style)
+
+    # ---- Tarjetas ---- #
 
     tarjetasData = [
         ['Tarjeta', 'Tipo', 'Saldo Disponible'],
@@ -295,15 +303,33 @@ def generarPDF(conexion):
     
     for tipo, numero, saldo in tarjetas:
 
-        numero = numero[:-4]
+        numero = numero[-4:]
 
-        tarjetasData.append([numero, tipo, f"${saldo:.2f}"])
+        tarjetasData.append([f"*{numero}", tipo, f"${saldo:.2f}"])
 
     tarjetasTable = Table(tarjetasData)
 
-    usuarioTarjetas = Table([[usuarioTable, tarjetasTable]], colWidths=[300, 300]) 
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), (0.5, 0.5, 0.5)),
+        ('TEXTCOLOR', (0, 0), (-1, 0), (1, 1, 1)),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), (1, 1, 1)),
+        ('GRID', (0, 0), (-1, -1), 1, (0, 0, 0))
+    ])
 
-    # --- Movimientos ---
+    tarjetasTable.setStyle(style)
+
+    usuarioTarjetas = Table([[usuarioTable, tarjetasTable]], colWidths=[300, 200])
+
+    usuarioTarjetas.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (0, 0), 'LEFT'),   # Primera tabla alineada a la izquierda
+        ('ALIGN', (1, 0), (1, 0), 'RIGHT'), # Segunda tabla alineada a la derecha
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+    ]))
+
+    # --- Movimientos --- #
 
     dataMovimientos= [['Fecha', 'Descripción', 'Monto']]
 
@@ -335,8 +361,10 @@ def generarPDF(conexion):
     table.setStyle(style)
 
     elements.append(usuarioTarjetas)
+    elements.append(Spacer(1, 40))
     elements.append(table)
 
     # Generar el PDF
     doc.build(elements)
-    print(f"PDF generado: {filename}")
+
+    os.startfile(filename)
