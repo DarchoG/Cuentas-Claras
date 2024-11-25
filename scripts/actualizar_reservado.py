@@ -5,6 +5,7 @@ def actualizar_dinero_reservado(conexion,):
     user_id = session['user_id']
     tipo_tarjeta = session['tarjeta'] 
     correo = session['correo']
+    id_tarjeta = session.get('id_tarjeta')
     if request.method == 'POST':
         # Obtener el nuevo valor de 'dinero_reservado' desde el formulario
         dinero_reservado = request.form['dinero_reservado']
@@ -12,12 +13,7 @@ def actualizar_dinero_reservado(conexion,):
         fecha_formateada = fecha_actual.strftime('%d/%m/%Y')
 
         #Obtener id de la tarjeta
-        cursor = conexion.cursor()
-        query = "SELECT id_tarjeta FROM usuariotarjetas WHERE correo=%s AND tipo_tarjeta=%s"
-        cursor.execute(query, (correo, tipo_tarjeta))
-
-        # Obtiene el resultado
-        id_tarjeta = cursor.fetchone()
+        
         # Actualizar el valor en la base de datos
         cursor = conexion.cursor()
         query = "UPDATE tarjetas SET dinero_reservado = %s WHERE id_tarjeta = %s and tipo_tarjeta = %s"
