@@ -1,9 +1,12 @@
 from flask import Flask, render_template, send_file, redirect,url_for, session, request
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Image, Paragraph
 from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
 from datetime import datetime
+from PIL import Image as PILImage
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import seaborn as sns
@@ -259,20 +262,30 @@ def organizarMovimientos(ingresos, egresos):
 
 def generarPDF(conexion):
 
-    fecha = datetime.now()
-    resultado = f"_{fecha.year}_{fecha.month:02d}_{fecha.day:02d}_{fecha.hour:02d}_{fecha.minute:02d}_{fecha.second:02d}"
+    fechaDocumento = datetime.now()
+    resultado = f"_{fechaDocumento.year}_{fechaDocumento.month:02d}_{fechaDocumento.day:02d}_{fechaDocumento.hour:02d}_{fechaDocumento.minute:02d}_{fechaDocumento.second:02d}"
     filename = (f"Estado_Cuenta{resultado}.pdf")
 
     doc = SimpleDocTemplate(
         filename, 
         pagesize=letter,
-        leftMargin=72,  
-        rightMargin=72, 
-        topMargin=72,    
-        bottomMargin=72 
+        leftMargin=50,  
+        rightMargin=50, 
+        topMargin=50,    
+        bottomMargin=50 
     )
 
     elements = []
+
+    # --- Imagen --- #
+
+    rutaImagen = r"static\\img\\SelfBank.png"
+
+    imagen = PILImage.open(rutaImagen)
+    anchoImagen = 200
+    altoImagen = int((anchoImagen / imagen.width) * imagen.height)
+
+    imagenPDF = Image(rutaImagen, width=anchoImagen, height=altoImagen)
 
     # --- Usuarios --- #
 
@@ -360,9 +373,23 @@ def generarPDF(conexion):
 
     table.setStyle(style)
 
+    # --- Texto --- #
+
+    fechaEmision = f"Fecha Expedición: {fechaDocumento.year}/{fechaDocumento.month:02d}/{fechaDocumento.day:02d} {fechaDocumento.hour:02d}:{fechaDocumento.minute:02d}:{fechaDocumento.second:02d}"
+    
+    estiloTexto = getSampleStyleSheet()['Normal']
+    estiloTexto.alignment = 1 
+    estiloTexto.textColor = colors.grey  
+
+    texto = Paragraph(fechaEmision, estiloTexto)
+
+    elements.append(imagenPDF)
+    elements.append(Spacer(1, 40))
     elements.append(usuarioTarjetas)
     elements.append(Spacer(1, 40))
     elements.append(table)
+    elements.append(Spacer(1, 40))
+    elements.append(texto)
 
     # Generar el PDF
     doc.build(elements)
