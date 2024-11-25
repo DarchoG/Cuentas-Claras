@@ -38,6 +38,11 @@
         {{ (data.dinero_reservado | sum if data.dinero_reservado else 0) + 
         (data.dinero_disponible | sum if data.dinero_disponible else 0) | float }}
     </div>
+    <div id="id_todosIDS" style="display: none;">    
+        {% for id in data['ids_tarjeta'] %}
+        <li>{{ id }}</li>
+        {% endfor %}</div>
+    <div id = "id_actual">{{ data['id_actual'] }}</div>
     <nav id="menu" class="hidden">
         <ul>
             <!-- Boton Notificaciones -->
@@ -71,7 +76,7 @@
         <div class= "Contenedor-hijo">
             <div class='cuadrito' id= "ModoDebito">
                 <div id=dinero_signo><div id='signo'>$</div>
-                <div><input min = 0 max ="{% for dinero in data.dinero_reservado %}{{ dinero }}{% endfor %}" type='number' id='dinero_modificado' class='dinero' value="{% for dinero in data.dinero_reservado %}{{ dinero }}{% endfor %}" step='0.01' "></div>
+                <div><input min = 0 max ="{% for dinero in data.dinero_reservado %}{{ dinero }}{% endfor %}" type='number' id='dinero_modificado' class='dinero' value="{% for dinero in data.dinero_reservado %}{{ dinero }}{% endfor %}" step='0.01' ></div>
             </div>
 
             <div id=ahorro>Dinero reservado</div>
@@ -133,22 +138,47 @@
     <form name="Forma01" method="POST" action="{{ url_for('actu_reservado') }}" style="display:none;" submit = false>
         <input type="hidden" name="dinero_reservado" id="dinero_reservado">
     </form>
-    <form id="Forma02" method="POST" action="/cambiar_tarjeta">
-        <input type="hidden" name="nueva_tarjeta" id="inputTarjeta" value="">
-      </form>
+    <form id="Forma02" action="/cambiar_tarjeta" method="POST">
+        <input type="hidden" id="inputTarjeta" name="nueva_tarjeta" value="">
+    </form>
     <script defer>
     ComprobarTarjeta();
     mostrar();
     function CambiaTarjeta() {
-        var tarjeta = $('#tarjeta').text().trim(); 
-        var nueva_tarjeta = tarjeta === "Débito" ? "Credito" : "Débito"; 
-        $('#tarjeta').text(nueva_tarjeta); 
+    // Obtener el ID actual desde el div oculto
+    var idActual = parseInt($('#id_actual').text().trim());
 
-       
-        $('#inputTarjeta').val(nueva_tarjeta);
-        $('#Forma02').submit();
-        
+    // Crear un arreglo con los IDs de las tarjetas
+    var idsTarjetas = [];
+    $('#id_todosIDS li').each(function() {
+        var id = parseInt($(this).text().trim());
+        idsTarjetas.push(id);
+    });
+
+    // Verificar que el ID actual esté en la lista
+    if (idsTarjetas.indexOf(idActual) === -1) {
+        console.error("El ID actual no se encuentra en la lista de IDs.");
+        return;
     }
+
+    // Encontrar el índice del ID actual y calcular el índice del siguiente ID
+    var indexActual = idsTarjetas.indexOf(idActual);
+    var nuevoIndex = (indexActual + 1) % idsTarjetas.length;  // Cicla al inicio si es el último
+    var nuevoId = idsTarjetas[nuevoIndex];
+
+    // Mostrar un alert con el nuevo ID que se enviará
+    
+
+    // Actualizar el ID actual en el HTML y el campo oculto en el formulario
+    $('#id_actual').text(nuevoId);
+    $('#inputTarjeta').val(nuevoId);
+
+    // Enviar el formulario para realizar el cambio de tarjeta
+    $('#Forma02').submit();
+}
+
+
+
 
     function  ComprobarTarjeta(){
         var tarjeta = $('#tarjeta').text()
@@ -177,19 +207,49 @@
         
     }
     
-    function mostrar(){
-        var dinero_reservado_actual = parseFloat($('#dinero_modificado').val())
-        var tarjeta = $('#tarjeta').text();
-        var texto = $('#max_dinero_debito').text();
-        // Limpiar el texto para extraer solo el valor numérico
-        var dineroMaximo = parseFloat(texto.replace(/[^\d.-]/g, ''));
-        
-        console.log("Total disponible leído del HTML:", totalDisponible);
-        // Imprimir el resultado en la consola
-       // console.log(dineroMaximo);
-       // console.log(tarjeta);
-       // $('#ApartadoCredito').hide();
+    function mostrar() {
+    // Obtener el dinero reservado actual
+    var dinero_reservado_actual = parseFloat($('#dinero_modificado').val());
+    
+    // Obtener el tipo de tarjeta
+    var tarjeta = $('#tarjeta').text();
+    
+    // Obtener el texto que contiene el dinero máximo y limpiarlo
+    var texto = $('#max_dinero_debito').text();
+    var dineroMaximo = parseFloat(texto.replace(/[^\d.-]/g, ''));
+
+    // Crear un arreglo vacío para guardar los IDs
+    var idsTarjetas = [];
+
+    // Iterar sobre los elementos <li> dentro del div con el ID 'id_todosIDS' y almacenar los IDs en el arreglo
+    $('#id_todosIDS li').each(function() {
+        var id = parseInt($(this).text().trim()); // Obtener el texto del elemento <li> como número
+        idsTarjetas.push(id); // Agregar el ID al arreglo
+    });
+
+    // Obtener el ID actual desde el HTML
+    var idActual = parseInt($('#id_actual').text().trim());
+
+    // Verificar si el ID actual existe en la lista
+    var indexActual = idsTarjetas.indexOf(idActual);
+
+    if (indexActual === -1) {
+        console.error("El ID actual no se encuentra en la lista de IDs.");
+        return;
     }
+
+    // Determinar el siguiente ID disponible
+    var nuevoIndex = (indexActual + 1) % idsTarjetas.length;
+    var idSiguiente = idsTarjetas[nuevoIndex];
+
+    // Mostrar en consola los resultados
+    console.log("Total disponible leído del HTML:", dineroMaximo);
+    console.log("Dinero reservado actual:", dinero_reservado_actual);
+    console.log("Lista de IDs de tarjetas:", idsTarjetas);
+    console.log("ID actual:", idActual);
+    console.log("Siguiente ID:", idSiguiente);
+}
+
     $(document).ready(function () {
     // Detectar cambios en el input
         $('#dinero_modificado').on('keyup change', function () {
