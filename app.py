@@ -180,9 +180,30 @@ def actu_reservado():
     
 @app.route('/cambiar_tarjeta', methods=['POST'])
 def cambiar_tarjeta():
+    # Obtener el nuevo ID de tarjeta enviado desde el formulario
     nueva_tarjeta = request.form['nueva_tarjeta']
-    session['tipo_tarjeta'] = nueva_tarjeta  
-    return redirect('/ahorros')  
+    session['id_tarjeta'] = nueva_tarjeta
+
+    # Obtener información adicional desde la sesión
+    id_usuario = session['user_id']
+    correo = session['correo']
+
+    # Consultar el tipo de tarjeta para el nuevo ID
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT tipo_tarjeta FROM usuariotarjetas WHERE correo = %s AND id_tarjeta = %s and id_usuario = %s
+    """, (correo, nueva_tarjeta,id_usuario))  # Usar nueva_tarjeta en la consulta
+    resultado = cur.fetchone()
+
+    # Verificar si se obtuvo un resultado válido
+    if resultado:
+        nuevo_tipo_tarjeta = resultado[0]  # Extraer el tipo de tarjeta
+        session['tipo_tarjeta'] = nuevo_tipo_tarjeta
+    else:
+        return "Error: No se encontró el tipo de tarjeta para el ID proporcionado", 400
+
+    # Redirigir al usuario a la página de ahorros después del cambio
+    return redirect('/ahorros')
     
 @app.route("/pagos")
 @login_required
