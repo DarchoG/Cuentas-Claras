@@ -8,9 +8,9 @@ Gestor de finanzas personales, permite el registro de pagos y su clasificación 
 
 ## **Características**
 
-- ![Pendiente](https://img.shields.io/badge/Pendiente-lightgrey?style=flat-square) Registro Ingresos y Egresos
-- ![Pendiente](https://img.shields.io/badge/Pendiente-lightgrey?style=flat-square) Desglose Gastos Mensuales
-- ![Pendiente](https://img.shields.io/badge/Pendiente-lightgrey?style=flat-square) Recordatorio Pagos
-- ![Pendiente](https://img.shields.io/badge/Pendiente-lightgrey?style=flat-square) Registro Perfil
-- ![Pendiente](https://img.shields.io/badge/Pendiente-lightgrey?style=flat-square) Inicio Sesión
-- ![Pendiente](https://img.shields.io/badge/Pendiente-lightgrey?style=flat-square) Generación Estados Cuenta
+- ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Registro Ingresos y Egresos
+- ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Desglose Gastos Mensuales
+- ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Recordatorio Pagos
+- ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Registro Perfil
+- ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Inicio Sesión
+- ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Generación Estados Cuenta
