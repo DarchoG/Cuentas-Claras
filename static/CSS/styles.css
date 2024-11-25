@@ -3,7 +3,7 @@
   --blanco: #F7EFE5;
   --moradosoft: #C3ACD0;
   --grisnegroso: #333;
-  --Griss: #a3a7be;
+  --Griss: #1f2333;
 
 }
 
@@ -211,7 +211,7 @@ nav a:hover {
   border: none;
   cursor: pointer;
   font-size: 30px; 
-  color: #4a4a4a; 
+  color: white; 
   display: flex;
   align-items: center;
   justify-content: center;

@@ -42,7 +42,7 @@
         {% for id in data['ids_tarjeta'] %}
         <li>{{ id }}</li>
         {% endfor %}</div>
-    <div id = "id_actual">{{ data['id_actual'] }}</div>
+    <div id = "id_actual" style="display: none;">{{ data['id_actual'] }}</div>
     <nav id="menu" class="hidden">
         <ul>
             <!-- Boton Notificaciones -->
@@ -65,10 +65,7 @@
                 savings
                 </span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ahorros</a></li>
 
-            <!-- Boton Pagar -->
-            <li><a href="{{ url_for('pagos') }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-symbols-outlined">
-                payments
-                </span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pagar</a></li>
+            
         </ul>
     </nav>
 
