@@ -14,3 +14,5 @@ Gestor de finanzas personales, permite el registro de pagos y su clasificación 
 - ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Registro Perfil
 - ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Inicio Sesión
 - ![Completado](https://img.shields.io/badge/Completado-%231f2333?style=flat-square) Generación Estados Cuenta
+
+https://github.com/user-attachments/assets/5303cf92-fe3b-4948-915b-746bfeafea58
